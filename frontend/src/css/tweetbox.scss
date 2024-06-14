@@ -1,0 +1,39 @@
+@import 'config';
+
+.tweet-box {
+
+    display: flex;
+    flex-direction: column;
+
+    textarea {
+        resize: none;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid $input-border-color;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        height: 100px;
+        outline: none;
+        transition: border-color 0.3s;
+
+        &:focus {
+            border-color: $input-border-focus-color;
+        }
+    }
+
+    .tweet-button {
+        align-self: flex-end;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: $border-radius;
+        background-color: $primary-color;
+        color: $button-text-color;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: $primary-color-hover;
+        }
+    }
+}
