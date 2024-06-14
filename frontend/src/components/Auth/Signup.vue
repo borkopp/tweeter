@@ -8,6 +8,7 @@
             <input type="password" v-model="password" placeholder="Password" required />
             <button type="submit">Sign Up</button>
         </form>
+        <p>Already have an account? <router-link to="/login">Login</router-link></p>
     </div>
 </template>
 

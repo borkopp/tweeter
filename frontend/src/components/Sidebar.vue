@@ -5,7 +5,7 @@
             <button>Settings</button>
         </div>
         <div class="sidebar-bottom">
-            <button>Login</button>
+            <button><router-link to="/login">Login</router-link></button>
         </div>
     </aside>
 </template>
