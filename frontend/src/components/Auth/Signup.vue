@@ -13,4 +13,6 @@
 
 
 
-<style scoped></style>
+<style scoped>
+@import '../../css/signup.scss'
+</style>

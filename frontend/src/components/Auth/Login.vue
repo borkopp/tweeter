@@ -11,4 +11,6 @@
     </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+@import '../../css/login.scss'
+</style>
