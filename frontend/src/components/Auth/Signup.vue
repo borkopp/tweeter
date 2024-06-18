@@ -1,5 +1,5 @@
 <script setup>
-import LogoSvg from '@/assets/logo.svg'; // Import your SVG file
+import LogoSvg from '@/assets/logo.svg'; 
 </script>
 <template>
     <div class="signup">
