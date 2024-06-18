@@ -1,7 +1,11 @@
 <script setup>
+import LogoSvg from '@/assets/logo.svg'; // Import your SVG file
 </script>
 <template>
     <div class="login">
+        <div class="logo">
+            <img :src="LogoSvg" alt="Logo" />
+        </div>
         <h2>Login</h2>
         <form @submit.prevent="login">
             <input type="email" v-model="email" placeholder="Email" required />

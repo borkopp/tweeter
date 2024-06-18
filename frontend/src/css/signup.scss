@@ -6,8 +6,16 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    padding: 20px;
     border-radius: 10px;
+
+    .logo {
+        margin-bottom: 10px; 
+
+        img {
+            width: 300px; 
+            height: 300px;
+        }
+    }
 
     h2 {
         margin-bottom: 20px;
