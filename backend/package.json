@@ -6,9 +6,13 @@
     "start": "node src/server.js"
   },
   "dependencies": {
+    "argon2": "^0.40.3",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
     "express-json-validator-middleware": "^3.0.0",
+    "express-promise-router": "^4.1.0",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "pg": "^8.6.0",
     "uuid": "^8.3.2"

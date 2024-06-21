@@ -1,5 +1,5 @@
 -- Create the users table
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     username TEXT UNIQUE NOT NULL,
@@ -7,28 +7,28 @@ CREATE TABLE users (
     password TEXT NOT NULL
 );
 
--- function to hash passwords
+-- Function to hash passwords
 CREATE OR REPLACE FUNCTION hash_password(password TEXT)
 RETURNS TEXT
 AS $$
 BEGIN
-    RETURN crypt(password, gen_salt('bf'));
+    RETURN crypt(password, gen_salt('bf')); 
 END;
 $$ LANGUAGE plpgsql;
 
--- function to check passwords
+-- Function to check passwords
 CREATE OR REPLACE FUNCTION check_password(username TEXT, password TEXT)
 RETURNS BOOLEAN
 AS $$
 DECLARE
     stored_password TEXT;
 BEGIN
-    SELECT password FROM users WHERE users.username = check_password.username INTO stored_password;
+    SELECT users.password INTO stored_password FROM users WHERE users.username = check_password.username;
     RETURN stored_password = crypt(password, stored_password);
 END;
 $$ LANGUAGE plpgsql;
 
--- trigger to automatically hash passwords before insertion
+-- Trigger to automatically hash passwords before insertion
 CREATE OR REPLACE FUNCTION trigger_hash_password_on_insert()
 RETURNS TRIGGER
 AS $$

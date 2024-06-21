@@ -1,3 +1,9 @@
+<script setup>
+import storeInitialize from '@/stores/StoreInitialize'
+
+const initializer = storeInitialize()
+initializer.initialize();
+</script>
 <template>
   <div id="app" class="app-container">
     <LeftSidebar />
