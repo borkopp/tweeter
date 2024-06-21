@@ -10,6 +10,59 @@ services:
       - /frontend/node_modules
     ports:
       - "3000:3000"
+    container_name: tweeter-frontend
     environment:
       - NODE_ENV=development
     command: npm run dev -- --host
+    networks:
+      - tweeter-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: tweeter-backend
+    environment:
+      - DATABASE_URL=postgres://borko:borko@database:5432/tweeter
+    ports:
+      - "4000:4000"
+    depends_on:
+      - database
+    networks:
+      - tweeter-network
+
+  database:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    container_name: tweeter-database
+    environment:
+      - POSTGRES_USER=borko
+      - POSTGRES_PASSWORD=borko
+      - POSTGRES_DB=tweeter
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - tweeter-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: tweeter-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - database
+    networks:
+      - tweeter-network
+
+networks:
+  tweeter-network:
+    driver: bridge
+
+volumes:
+  db-data:

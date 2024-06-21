@@ -1,12 +1,17 @@
 {
-  "name": "backend",
+  "name": "tweeter-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js"
   },
-  "keywords": [],
-  "author": "Borko Petrevski",
-  "license": "ISC"
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "express-json-validator-middleware": "^3.0.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.6.0",
+    "uuid": "^8.3.2"
+  },
+  "type": "module"
 }
