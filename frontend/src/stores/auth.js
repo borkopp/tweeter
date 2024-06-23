@@ -64,13 +64,14 @@ export const useAuthStore = defineStore('auth', () => {
       password: password.trim()
     }, session);
     if (res.status === 200) {
-      session.token = res.token;
-      await getUser(res.userId);
-      user.password = undefined; 
+      session.token = res.data.token;
+      const userId = res.data.userId;
+      await getUser(userId); 
+      user.password = undefined;
     } else {
       error.value = res.data?.message || res.statusText;
       console.log('Login failed:', error.value);
-      reset(); 
+      reset();
     }
     return res.status < 300;
   };
