@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import LogoSvg from '@/assets/logo.svg';
+import router from '@/router';
 
 const authStore = useAuthStore();
 const name = ref('');
@@ -15,7 +16,7 @@ const handleRegister = async () => {
         const registrationSuccessful = await authStore.register(name.value, username.value, email.value, password.value);
         if (registrationSuccessful) {
             console.log('Registration and login successful');
-            this.$router.push({ name: 'HomeView' });
+            router.push('/');
         } else {
             console.log('Registration failed:', authStore.error);
         }
