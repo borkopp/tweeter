@@ -1,19 +1,52 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import LoginView from '../views/LoginView.vue';
-import SignupView from '../views/SignupView.vue';
-import HomeView from '../views/HomeView.vue';
-import SettingsView from '../views/SettingsView.vue';
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+import { useAuthStore } from '@/stores/auth'
 
-const routes = [
-  { path: '/login', component: LoginView },
-  { path: '/signup', component: SignupView },
-  { path: '/settings', component: SettingsView },
-  { path: '/', component: HomeView },
-];
+let l_router = null
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-});
+const router = () => {
+  const authStore = useAuthStore(),
+    ifNotAuthorized = (_to, _from, next) => {
+      if (authStore.isNotAuthorized) {
+        next()
+      } else {
+        next({ name: 'home' })
+      }
+    },
+    ifAuthorized = (_to, _from, next) => {
+      if (authStore.isAuthorized) {
+        next()
+      } else {
+        next({ name: 'login' })
+      }
+    },
+    routes = [
+      { path: '/', name: 'home', component: HomeView },
+      {
+        beforeEnter: ifNotAuthorized,
+        path: '/login',
+        name: 'login',
+        component: () => import('@/views/LoginView.vue')
+      },
+      {
+        beforeEnter: ifNotAuthorized,
+        path: '/register',
+        name: 'register',
+        component: () => import('@/views/SignupView.vue')
+      },
+      {
+        beforeEnter: ifAuthorized,
+        path: '/settings',
+        name: 'settings',
+        component: () => import('@/views/SettingsView.vue')
+      }
+    ]
 
-export default router;
+  if (l_router == null) {
+    l_router = createRouter({ history: createWebHistory(), routes })
+  }
+
+  return l_router
+}
+
+export default router

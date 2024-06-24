@@ -1,26 +1,16 @@
 <script setup>
+import LeftSidebar from '@/components/Sidebar.vue'
 import storeInitialize from '@/stores/StoreInitialize'
 
 const initializer = storeInitialize()
 initializer.initialize();
 </script>
 <template>
-  <div id="app" class="app-container">
-    <LeftSidebar />
+  <div v-if="initializer.initialized" id="app" class="app-container">
+    <LeftSidebar v-if="initializer.initialized" />
     <router-view class="main-content" />
   </div>
 </template>
-
-<script>
-import LeftSidebar from './components/Sidebar.vue';
-
-export default {
-  name: 'App',
-  components: {
-    LeftSidebar,
-  },
-};
-</script>
 
 <style lang="scss">
 @import './css/global.scss';

@@ -1,14 +1,28 @@
 import { defineStore } from 'pinia';
 import { reactive, computed, inject, ref } from 'vue';
 import { getJson, postJson, patchJson, deleteJson } from '@/service/rest/restJson';
+import { useSessionStore } from './StoreSession';
 
 export const useAuthStore = defineStore('auth', () => {
   const config = inject('config');
   const restPaths = config.restPaths;
+  const sessionStore = useSessionStore();
 
   const user = reactive({});
-  const session = reactive({ token: null });
+  const session = sessionStore.session;
   const error = ref(null);
+
+  const setSession = (session) => {
+    sessionStore.setSession(session);
+  };
+
+  const getSession = () => {
+    return sessionStore.getSession();
+  };
+
+  const clearSession = () => {
+    sessionStore.clearSession();
+  };
 
   const reset = () => {
     console.log('Reset called');
@@ -64,19 +78,24 @@ export const useAuthStore = defineStore('auth', () => {
       password: password.trim()
     }, session);
     if (res.status === 200) {
-      session.token = res.data.token;
-      const userId = res.data.userId;
-      await getUser(userId); 
+      const session = {
+        token: res.data.token,
+        userId: res.data.userId
+      };
+      setSession(session);
+      await getUser(res.data.userId); 
       user.password = undefined;
     } else {
       error.value = res.data?.message || res.statusText;
       console.log('Login failed:', error.value);
-      reset();
+      clearSession();
     }
     return res.status < 300;
   };
 
-  const logout = reset;
+  const logout = () => {
+    clearSession();
+  };
 
   const isNotAuthorized = computed(() => !session.token);
   const isAuthorized = computed(() => !!session.token);
@@ -85,15 +104,15 @@ export const useAuthStore = defineStore('auth', () => {
 
   return {
     user,
+    session: getSession(),
+    error,
     register,
     login,
     logout,
-    reset,
+    isNotAuthorized,
+    isAuthorized,
     getUser,
     patchUser,
     deleteUser,
-    isNotAuthorized,
-    isAuthorized,
-    error,
   };
 });

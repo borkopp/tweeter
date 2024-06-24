@@ -26,5 +26,5 @@ const config = {
 
 
 window.addEventListener('load', () => {
-    createApp(App).provide('config', config).use(pinia).use(router).mount('#app')
+    createApp(App).provide('config', config).use(pinia).use(router()).mount('#app')
 })
