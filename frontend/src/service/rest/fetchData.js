@@ -21,8 +21,17 @@ const fetchData = async (p_method, p_url, { p_data, p_headers = {}, p_fetch_json
       statusText: res.statusText,
       headers,
       token: headers.authorization ? headers.authorization.split(' ')[1] : null,
-      data: (res.ok && !p_fetch_json) ? await res.blob() : await res.json(),
+      data: null,
     };
+
+    if (res.ok && !p_fetch_json) {
+      result.data = await res.blob();
+    } else if (res.ok && p_fetch_json) {
+      result.data = await res.json();
+    } else {
+      // Handle non-JSON responses
+      result.data = await res.text();
+    }
 
     if (p_session?.saveSessionInfo != null) {
       p_session.saveSessionInfo(result);
@@ -39,5 +48,6 @@ const fetchData = async (p_method, p_url, { p_data, p_headers = {}, p_fetch_json
     return { status: 500, statusText: 'Fetch error', headers: {}, data: null };
   }
 };
+
 
 export default fetchData;

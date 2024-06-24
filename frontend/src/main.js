@@ -25,7 +25,8 @@ const config = {
   restPaths: {
     accounts: 'http://localhost:4000/api/auth/accounts',
     register: 'http://localhost:4000/api/auth/register',
-    login: 'http://localhost:4000/api/auth/login'
+    login: 'http://localhost:4000/api/auth/login',
+    account: 'http://localhost:4000/api/account'
   },
   default: {
     account: {

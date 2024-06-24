@@ -12,6 +12,10 @@ export const useSessionStore = defineStore('session', {
     },
 
     getSession() {
+      const session = JSON.parse(localStorage.getItem('session'));
+      if (session) {
+        this.session = session;
+      }
       return this.session;
     },
 
