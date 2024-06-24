@@ -1,7 +1,7 @@
 <template>
     <div class="tweet-box">
         <textarea placeholder="Write something..."></textarea>
-        <button class="tweet-button">Tweet</button>
+        <button class="tweet-button"><v-icon icon="mdi-twitter" class="icon"></v-icon>Tweet</button>
     </div>
 </template>
 

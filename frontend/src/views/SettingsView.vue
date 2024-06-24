@@ -24,7 +24,7 @@
                         <option value="es">Spanish</option>
                     </select>
                 </div>
-                <button type="submit">Save Changes</button>
+                <button type="submit"><v-icon icon="mdi-content-save" class="icon"></v-icon>Save Changes</button>
             </form>
         </main>
     </div>

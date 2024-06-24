@@ -2,11 +2,24 @@ import './css/global.scss'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import '@mdi/font/css/materialdesignicons.css'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
 
 import App from './App.vue'
 import router from './router'
-
 const pinia = createPinia()
+
+const vuetify = createVuetify({
+  components,
+  directives,
+  icons: {
+    defaultSet: 'mdi',
+  },
+})
+
 
 const config = {
   restPaths: {
@@ -26,5 +39,5 @@ const config = {
 
 
 window.addEventListener('load', () => {
-    createApp(App).provide('config', config).use(pinia).use(router).mount('#app')
+    createApp(App).provide('config', config).use(pinia).use(router).use(vuetify).mount('#app')
 })

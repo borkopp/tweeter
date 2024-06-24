@@ -37,7 +37,7 @@ const handleRegister = async () => {
             <input type="text" v-model="username" placeholder="Username" required />
             <input type="text" v-model="name" placeholder="Name" required />
             <input type="password" v-model="password" placeholder="Password" required />
-            <button type="submit">Sign Up</button>
+            <button type="submit"><v-icon icon="mdi-login" class="icon"></v-icon>Sign Up</button>
         </form>
         <p>Already have an account? <router-link to="/login">Login</router-link></p>
     </div>

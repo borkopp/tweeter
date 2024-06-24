@@ -7,7 +7,7 @@
         <form @submit.prevent="handleLogin">
             <input v-model="username" placeholder="Username" required />
             <input type="password" v-model="password" placeholder="Password" required />
-            <button type="submit">Login</button>
+            <button type="submit"><v-icon icon="mdi-login" class="icon"></v-icon>Login</button>
         </form>
         <p v-if="authStore.error" style="color: red;">{{ authStore.error }}</p>
         <p>Don't have an account? <router-link to="/signup">Sign Up</router-link></p>

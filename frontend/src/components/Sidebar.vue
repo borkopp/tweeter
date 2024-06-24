@@ -1,12 +1,20 @@
 <template>
     <aside class="sidebar">
         <div class="sidebar-top">
-            <router-link to="/"><button>Home</button></router-link>
-            <router-link to="/settings"><button>Settings</button></router-link>
+            <router-link to="/"><button><v-icon icon="mdi-home" class="icon"></v-icon>Home</button></router-link>
+            <router-link to="/settings"><button><v-icon icon="mdi-cog"
+                        class="icon"></v-icon>Settings</button></router-link>
         </div>
         <div class="sidebar-bottom">
-            <router-link v-if="!authStore.isAuthorized" to="/login"><button>Login</button></router-link>
-            <button v-if="authStore.isAuthorized" @click="handleLogout">Logout</button>
+            <router-link v-if="!authStore.isAuthorized" to="/login">
+                <button>
+                    <v-icon icon="mdi-login" class="icon"></v-icon>
+                    Login
+                </button>
+            </router-link>
+            <button v-if="authStore.isAuthorized" @click="handleLogout">
+                <v-icon icon="mdi-logout" class="icon"></v-icon>Logout
+            </button>
         </div>
     </aside>
 </template>
@@ -31,7 +39,7 @@ export default {
             handleLogout
         }
     }
-};
+}
 </script>
 
 <style scoped lang="scss">

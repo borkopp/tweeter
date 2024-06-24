@@ -2,6 +2,7 @@
 import LeftSidebar from '@/components/Sidebar.vue'
 import storeInitialize from '@/stores/StoreInitialize'
 
+
 const initializer = storeInitialize()
 initializer.initialize();
 </script>

@@ -12,8 +12,11 @@
     .sidebar-top {
         display: flex;
         flex-direction: column;
-
+ 
         button {
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
             width: 100%;
             margin-bottom: 15px;
             padding: 10px;
@@ -29,10 +32,17 @@
                 background-color: $primary-color-hover;
             }
         }
+        //router-link blue underline
+        a {
+            text-decoration: none; 
+        }
     }
 
     .sidebar-bottom {
         button {
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
             padding: 10px;
             font-size: 16px;
             width: 100%;
@@ -46,6 +56,10 @@
             &:hover {
                 background-color: $primary-color-hover;
             }
+        }
+        //router-link blue underline
+        a {
+            text-decoration: none; 
         }
     }
 }
