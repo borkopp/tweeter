@@ -35,5 +35,10 @@ export const useAccountStore = defineStore('account', () => {
     }
   };
 
-  return { user, error, fetchUser };
+  const clearUser = () => {
+    user.value = null;
+    error.value = null;
+  };
+
+  return { user, error, fetchUser, clearUser };
 });

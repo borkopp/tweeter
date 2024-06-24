@@ -93,6 +93,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const logout = () => {
     clearSession();
+    accountStore.clearUser();
   };
 
   const isNotAuthorized = computed(() => !getSession()?.token);
