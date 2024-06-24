@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import { useAuthStore } from '@/stores/auth'
+import { useToast } from 'vue-toastification';
 
 const routes = [
   { path: '/', name: 'home', component: HomeView },
@@ -14,6 +15,7 @@ const routes = [
         next();
       } else {
         next({ name: 'home' });
+
       }
     }
   },
@@ -36,10 +38,12 @@ const routes = [
     component: () => import('@/views/SettingsView.vue'),
     beforeEnter: (to, from, next) => {
       const authStore = useAuthStore();
+      const toast = useToast();
       if (authStore.isAuthorized) {
         next();
       } else {
         next({ name: 'login' });
+        toast.error('You are not logged in!');
       }
     }
   }

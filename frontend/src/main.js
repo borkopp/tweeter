@@ -7,6 +7,8 @@ import { createVuetify } from 'vuetify'
 import '@mdi/font/css/materialdesignicons.css'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import Toast, { POSITION } from 'vue-toastification'
+import "vue-toastification/dist/index.css";
 
 import App from './App.vue'
 import router from './router'
@@ -40,5 +42,5 @@ const config = {
 
 
 window.addEventListener('load', () => {
-    createApp(App).provide('config', config).use(pinia).use(router).use(vuetify).mount('#app')
+    createApp(App).provide('config', config).use(pinia).use(router).use(vuetify).use(Toast, {position: POSITION.BOTTOM_RIGHT, timeout: 2000}).mount('#app')
 })

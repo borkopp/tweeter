@@ -7,13 +7,24 @@
                     <label for="profile-picture">Change profile picture</label>
                     <input type="file" id="profile-picture" />
                 </div>
-                <div class="form-group">
-                    <label for="username">Change username</label>
-                    <input type="text" id="username" placeholder="Enter your username" />
+                <p class="settings-title">Email</p>
+                <div class="settings-field">
+                    {{ user.email }}
                 </div>
-                <div class="form-group">
-                    <label for="name">Change your name</label>
-                    <input type="text" id="name" placeholder="Enter your name" />
+                <p class="settings-title">Username</p>
+                <div class="settings-field">
+                    {{ user.username }}
+                    <v-icon icon="mdi-pencil" class="field-icon"></v-icon>
+                </div>
+                <p class="settings-title">Name</p>
+                <div class="settings-field">
+                    {{ user.name }}
+                    <v-icon icon="mdi-pencil" class="field-icon"></v-icon>
+                </div>
+                <p class="settings-title">Password</p>
+                <div class="settings-field">
+                    ********
+                    <v-icon icon="mdi-pencil" class="field-icon"></v-icon>
                 </div>
                 <div class="form-group">
                     <label for="language">Change Language</label>
@@ -31,7 +42,19 @@
 </template>
 
 <script>
+import { useAccountStore } from '@/stores/StoreAccount';
+export default {
+    setup() {
+        const accountStore = useAccountStore();
+        const user = accountStore.user;
 
+        console.log(user.value);
+
+        return {
+            user,
+        }
+    }
+}
 </script>
 @
 <style scoped lang="scss">
