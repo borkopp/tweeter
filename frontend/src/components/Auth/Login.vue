@@ -17,6 +17,8 @@
 <script>
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
+import router from '@/router';
+import LogoSvg from '@/assets/logo.svg';
 
 export default {
     setup() {
@@ -29,15 +31,14 @@ export default {
             await authStore.login(username.value, password.value);
             if (authStore.isAuthorized) {
                 console.log('Login successful');
-                // Redirect to home or another page
+                router.push('/');
             }
         };
 
-        return { authStore, username, password, handleLogin };
+        return { authStore, username, password, handleLogin, LogoSvg };
     },
 };
 </script>
-
 <style scoped lang="scss">
 @import '../../css/login.scss'
 </style>

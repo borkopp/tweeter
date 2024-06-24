@@ -6,8 +6,8 @@ const initializer = storeInitialize()
 initializer.initialize();
 </script>
 <template>
-  <div v-if="initializer.initialized" id="app" class="app-container">
-    <LeftSidebar v-if="initializer.initialized" />
+  <div id="app" class="app-container">
+    <LeftSidebar />
     <router-view class="main-content" />
   </div>
 </template>

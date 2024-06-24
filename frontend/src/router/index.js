@@ -2,51 +2,52 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import { useAuthStore } from '@/stores/auth'
 
-let l_router = null
-
-const router = () => {
-  const authStore = useAuthStore(),
-    ifNotAuthorized = (_to, _from, next) => {
-      if (authStore.isNotAuthorized) {
-        next()
+const routes = [
+  { path: '/', name: 'home', component: HomeView },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/LoginView.vue'),
+    beforeEnter: (to, from, next) => {
+      const authStore = useAuthStore();
+      if (!authStore.isAuthorized) {
+        next();
       } else {
-        next({ name: 'home' })
+        next({ name: 'home' });
       }
-    },
-    ifAuthorized = (_to, _from, next) => {
+    }
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: () => import('@/views/SignupView.vue'),
+    beforeEnter: (to, from, next) => {
+      const authStore = useAuthStore();
+      if (!authStore.isAuthorized) {
+        next();
+      } else {
+        next({ name: 'home' });
+      }
+    }
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: () => import('@/views/SettingsView.vue'),
+    beforeEnter: (to, from, next) => {
+      const authStore = useAuthStore();
       if (authStore.isAuthorized) {
-        next()
+        next();
       } else {
-        next({ name: 'login' })
+        next({ name: 'login' });
       }
-    },
-    routes = [
-      { path: '/', name: 'home', component: HomeView },
-      {
-        beforeEnter: ifNotAuthorized,
-        path: '/login',
-        name: 'login',
-        component: () => import('@/views/LoginView.vue')
-      },
-      {
-        beforeEnter: ifNotAuthorized,
-        path: '/register',
-        name: 'register',
-        component: () => import('@/views/SignupView.vue')
-      },
-      {
-        beforeEnter: ifAuthorized,
-        path: '/settings',
-        name: 'settings',
-        component: () => import('@/views/SettingsView.vue')
-      }
-    ]
-
-  if (l_router == null) {
-    l_router = createRouter({ history: createWebHistory(), routes })
+    }
   }
+];
 
-  return l_router
-}
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
 
-export default router
+export default router;
