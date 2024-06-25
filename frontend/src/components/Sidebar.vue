@@ -6,18 +6,18 @@
                         class="icon"></v-icon>Settings</button></router-link>
         </div>
         <div class="sidebar-bottom">
-            <ProfileSidebar />
+            <ProfileSidebarButton />
         </div>
     </aside>
 </template>
 
 
 <script>
-import ProfileSidebar from '@/components/ProfileSidebar.vue'
+import ProfileSidebarButton from '@/components/ProfileSidebarButton.vue'
 export default {
     name: 'LeftSidebar',
     components: {
-        ProfileSidebar
+        ProfileSidebarButton
     }
 }
 </script>

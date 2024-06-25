@@ -37,7 +37,7 @@ import { useAuthStore } from '@/stores/auth'
 import { useAccountStore } from '@/stores/StoreAccount'
 
 export default {
-    name: 'ProfileSidebar',
+    name: 'ProfileSidebarButton',
     setup() {
         const authStore = useAuthStore()
         const accountStore = useAccountStore()
