@@ -26,7 +26,6 @@ export default {
         const authStore = useAuthStore();
         const username = ref('');
         const password = ref('');
-
         const toast = useToast();
 
         const handleLogin = async () => {

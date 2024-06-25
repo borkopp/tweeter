@@ -3,6 +3,8 @@ import pkg from 'pg';
 import authenticateToken  from '../middleware/auth.js';
 
 const { Pool } = pkg;
+
+// TODO: Move to a .env file
 const pool = new Pool({
     user: 'borko',
     host: 'database', 

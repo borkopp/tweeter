@@ -4,6 +4,8 @@ import pkg from 'pg';
 
 const auth = Router();
 const { Pool } = pkg;
+
+// TODO: Move to a .env file
 const pool = new Pool({
   user: 'borko',
   host: 'database', 

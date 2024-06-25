@@ -1,29 +1,37 @@
-<script setup>
+<script>
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import LogoSvg from '@/assets/logo.svg';
 import router from '@/router';
 
-const authStore = useAuthStore();
-const name = ref('');
-const username = ref('');
-const email = ref('');
-const password = ref('');
+export default {
+    name: 'Signup',
+    setup() {
+        const authStore = useAuthStore();
+        const name = ref('');
+        const username = ref('');
+        const email = ref('');
+        const password = ref('');
 
-const handleRegister = async () => {
-    console.log("Register button pressed");
-    try {
-        const registrationSuccessful = await authStore.register(name.value, username.value, email.value, password.value);
-        if (registrationSuccessful) {
-            console.log('Registration and login successful');
-            router.push('/');
-        } else {
-            console.log('Registration failed:', authStore.error);
-        }
-    } catch (error) {
-        console.error('Error during registration:', error);
+        const handleRegister = async () => {
+            console.log("Register button pressed");
+            try {
+                const registrationSuccessful = await authStore.register(name.value, username.value, email.value, password.value);
+                if (registrationSuccessful) {
+                    console.log('Registration and login successful');
+                    router.push('/');
+                } else {
+                    console.log('Registration failed:', authStore.error);
+                }
+            } catch (error) {
+                console.error('Error during registration:', error);
+            }
+        };
+
+        return { authStore, name, username, email, password, handleRegister, LogoSvg };
     }
 };
+
 </script>
 
 <template>
