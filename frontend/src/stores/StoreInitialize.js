@@ -1,28 +1,18 @@
 import { defineStore } from 'pinia'
-import { ref }         from 'vue'
+import { ref } from 'vue'
 
-const StoreInitialize =
-  defineStore
-  ( 'initialize',
-  
-    () =>
-    { const
-        initializers =
-          [],
+const StoreInitialize = defineStore(
+  'initialize',
 
-        isInitialized =
-          ref(false),
+  () => {
+    const initializers = [],
+      isInitialized = ref(false),
+      addInitializer = (p_initializer) =>
+        initializers.push(new Promise((resolve) => p_initializer(resolve))),
+      initialize = () => Promise.all(initializers).then(() => (isInitialized.value = true))
 
-        addInitializer =
-          p_initializer => 
-          initializers.push(new Promise(resolve => p_initializer(resolve))),
-
-        initialize = 
-          () => Promise.all(initializers)
-                       .then(() => isInitialized.value = true)
-          
-      return { addInitializer, initialize, isInitialized }
-    }
-  )
+    return { addInitializer, initialize, isInitialized }
+  }
+)
 
 export default StoreInitialize

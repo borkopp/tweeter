@@ -29,7 +29,7 @@ const fetchData = async (p_method, p_url, { p_data, p_headers = {}, p_fetch_json
     } else if (res.ok && p_fetch_json) {
       result.data = await res.json();
     } else {
-      // Handle non-JSON responses
+      // for non-json
       result.data = await res.text();
     }
 

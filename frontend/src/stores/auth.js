@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { reactive, computed, inject, ref } from 'vue';
-import { getJson, postJson, patchJson, deleteJson } from '@/service/rest/restJson';
+import { getJson, postJson } from '@/service/rest/restJson';
 import { useSessionStore } from './StoreSession';
 import { useAccountStore } from './StoreAccount';
 
@@ -45,17 +45,6 @@ export const useAuthStore = defineStore('auth', () => {
     return res.status < 300;
   };
 
-  const patchUser = async () => {
-    console.log('patchUser called');
-    const res = await patchJson(`${restPaths.accounts}/${user.id}`, user, getSession());
-    return res.status < 300;
-  };
-
-  const deleteUser = async () => {
-    console.log('deleteUser called');
-    const res = await deleteJson(`${restPaths.accounts}/${user.id}`, getSession());
-    return res.status < 300;
-  };
 
   const register = async (name, username, email, password) => {
     console.log('register called with:', { name, username, email, password });
@@ -111,8 +100,6 @@ export const useAuthStore = defineStore('auth', () => {
     isNotAuthorized,
     isAuthorized,
     getUser,
-    patchUser,
-    deleteUser,
     getSession
   };
 });
