@@ -1,6 +1,30 @@
+@import 'config';
 .profile-dropdown {
     position: relative;
   }
+
+  .login-button {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 100%;
+    padding: 10px;
+    border: 2px solid $primary-color;
+    border-radius: $border-radius;
+    background-color: none;
+    color: $primary-color;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: $primary-color-hover;
+        color: $button-text-color;
+    }
+}
+//router-link blue underline
+a {
+    text-decoration: none; 
+}
   
   .profile-button {
     display: flex;
@@ -58,6 +82,9 @@
     cursor: pointer;
     &:hover {
       background-color: #f0f0f0;
+    }
+    a {
+      text-decoration: none;
     }
   }
   
