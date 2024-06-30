@@ -1,27 +1,31 @@
 import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
-export const useSessionStore = defineStore('session', {
-  state: () => ({
-    session: JSON.parse(localStorage.getItem('session')) || null,
-  }),
+export const useSessionStore = defineStore('session', () => {
+  const session = ref(JSON.parse(localStorage.getItem('session')) || null);
 
-  actions: {
-    setSession(session) {
-      this.session = session;
-      localStorage.setItem('session', JSON.stringify(session));
-    },
+  const setSession = (newSession) => {
+    session.value = newSession;
+    localStorage.setItem('session', JSON.stringify(newSession));
+  };
 
-    getSession() {
-      const session = JSON.parse(localStorage.getItem('session'));
-      if (session) {
-        this.session = session;
-      }
-      return this.session;
-    },
+  const getSession = () => {
+    const savedSession = JSON.parse(localStorage.getItem('session'));
+    if (savedSession) {
+      session.value = savedSession;
+    }
+    return session.value;
+  };
 
-    clearSession() {
-      this.session = null;
-      localStorage.removeItem('session');
-    },
-  },
+  const clearSession = () => {
+    session.value = null;
+    localStorage.removeItem('session');
+  };
+
+  return {
+    session,
+    setSession,
+    getSession,
+    clearSession
+  };
 });
