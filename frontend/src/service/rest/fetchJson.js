@@ -1,4 +1,5 @@
 import fetchData from './fetchData';
+import { authHeader } from '@/utils/authHeader';
 
 const fetchJson = async (p_method, p_url, { p_data = null, p_session = null }) => 
   await fetchData(
@@ -9,6 +10,7 @@ const fetchJson = async (p_method, p_url, { p_data = null, p_session = null }) =
       p_headers: {
         'Accept': 'application/vnd.api+json, application/json',
         'Content-Type': 'application/json',
+        ...authHeader(),
       },
       p_fetch_json: true,
       p_session,

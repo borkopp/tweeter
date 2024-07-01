@@ -1,42 +1,53 @@
 import { defineStore } from 'pinia';
 import { reactive, computed, inject, ref } from 'vue';
 import { getJson, postJson } from '@/service/rest/restJson';
-import { useSessionStore } from './StoreSession';
 import { useAccountStore } from './StoreAccount';
+import {jwtDecode} from 'jwt-decode';
 
 export const useAuthStore = defineStore('auth', () => {
   const config = inject('config');
   const restPaths = config.restPaths;
-  const sessionStore = useSessionStore();
   const accountStore = useAccountStore();
 
   const user = reactive({});
   const error = ref(null);
 
-  const setSession = (session) => {
-    console.log('Setting session:', session);
-    sessionStore.setSession(session);
+  const setAuthToken = (token) => {
+    localStorage.setItem('authToken', token);
+  };
+
+  const getAuthToken = () => {
+    return localStorage.getItem('authToken');
+  };
+
+  const clearAuthToken = () => {
+    localStorage.removeItem('authToken');
   };
 
   const getSession = () => {
-    const session = sessionStore.getSession();
-    console.log('Retrieved session:', session);
-    return session;
-  };
-
-  const clearSession = () => {
-    sessionStore.clearSession();
+    const token = getAuthToken();
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        console.log('Retrieved token:', decoded);
+        return { token, userId: decoded.id };
+      } catch (error) {
+        console.error('Failed to decode token:', error);
+      }
+    }
+    return null;
   };
 
   const reset = () => {
     console.log('Reset called');
-    clearSession();
+    clearAuthToken();
     Object.assign(user, config.default.account);
   };
 
   const getUser = async (id) => {
     console.log('getUser called with id:', id);
-    const res = await getJson(`${restPaths.accounts}/${id}`, getSession());
+    const session = getSession();
+    const res = await getJson(`${restPaths.accounts}/${id}`, { headers: { Authorization: `Bearer ${session.token}` } });
     if (res.status === 200) {
       Object.assign(user, res.data);
     } else {
@@ -44,7 +55,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
     return res.status < 300;
   };
-
 
   const register = async (name, username, email, password) => {
     console.log('register called with:', { name, username, email, password });
@@ -63,36 +73,44 @@ export const useAuthStore = defineStore('auth', () => {
     console.log('login called with:', { username, password });
     const res = await postJson(restPaths.login, { username: username.trim(), password: password.trim() });
     if (res.status === 200) {
-      const session = {
-        token: res.data.token,
-        userId: res.data.userId
-      };
-      setSession(session);
-      console.log('Login successful, session set:', session);
+      setAuthToken(res.data.token);
+      console.log('Login successful, token set:', res.data.token);
       await accountStore.fetchUser();
       user.password = undefined;
       return true;
     } else {
       error.value = res.data?.message || res.statusText;
       console.log('Login failed:', error.value);
-      clearSession();
+      reset();
       return false;
     }
   };
 
   const logout = () => {
-    clearSession();
+    clearAuthToken();
     accountStore.clearUser();
   };
 
   const isNotAuthorized = computed(() => !getSession()?.token);
   const isAuthorized = computed(() => !!getSession()?.token);
 
+  const token = getAuthToken();
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+      console.log('Retrieved token:', decoded);
+      setAuthToken(token); 
+      accountStore.fetchUser();
+    } catch (error) {
+      console.error('Failed to decode token:', error);
+    }
+  }
+
   reset();
 
   return {
     user,
-    session: getSession(),
+    session: getSession,
     error,
     register,
     login,

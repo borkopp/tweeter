@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import authenticateToken from '../middleware/auth.js';
 import jwt from 'jsonwebtoken';
 import pkg from 'pg';
 
@@ -34,6 +35,7 @@ auth.post('/login', async (req, res) => {
     const user = userResult.rows[0];
 
     const token = jwt.sign({ id: user.id }, TOKEN_SECRET, { expiresIn: parseInt(TOKEN_EXPIRES) });
+    req.session.user = {id: user.id, username};
     res.json({ token, userId: user.id });
   } catch (error) {
     console.error('Login error:', error);
@@ -59,7 +61,7 @@ auth.post('/register', async (req, res) => {
   }
 });
 
-auth.get('/accounts/:id', async (req, res) => {
+auth.get('/accounts/:id', authenticateToken, async (req, res) => {
   const userId = req.params.id;
 
   try {
@@ -78,5 +80,14 @@ auth.get('/accounts/:id', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+auth.get('/session', (req, res) => {
+  if (req.session.user) {
+    res.json({ user: req.session.user });
+  } else {
+    res.status(401).send('Not authenticated');
+  }
+});
+
+
 
 export { auth };

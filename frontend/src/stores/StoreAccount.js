@@ -21,7 +21,7 @@ export const useAccountStore = defineStore('account', () => {
 
     const userId = session.userId;
     try {
-      const res = await getJson(`${restPaths.account}/${userId}`, session);
+      const res = await getJson(`${restPaths.account}/${userId}`, { headers: { Authorization: `Bearer ${session.token}` } });
       if (res.status === 200) {
         user.value = res.data;
         console.log('User fetched successfully:', user.value);
