@@ -1,17 +1,17 @@
 import { defineStore } from 'pinia';
 import { ref, inject } from 'vue';
-import { useAuthStore } from './authStore';
+import { useSessionStore } from './sessionStore';
 import { getJson } from '@/service/rest/restJson';
 
 export const useAccountStore = defineStore('account', () => {
-  const authStore = useAuthStore();
+  const sessionStore = useSessionStore();
   const user = ref(null);
   const error = ref(null);
   const config = inject('config');
   const restPaths = config.restPaths;
 
   const fetchUser = async () => {
-    const session = authStore.getSession();
+    const session = sessionStore.session;
     console.log('Fetching user with session:', session);
 
     if (!session || !session.userId) {
@@ -21,7 +21,9 @@ export const useAccountStore = defineStore('account', () => {
 
     const userId = session.userId;
     try {
-      const res = await getJson(`${restPaths.account}/${userId}`, { headers: { Authorization: `Bearer ${session.token}` } });
+      const res = await getJson(`${restPaths.account}/${userId}`, { 
+        p_session: session
+      });
       if (res.status === 200) {
         user.value = res.data;
         console.log('User fetched successfully:', user.value);

@@ -8,9 +8,9 @@
     <div v-else class="profile-dropdown">
         <button @click="toggleDropdown" class="profile-button">
             <v-icon icon="mdi-account" class="profile-icon"></v-icon>
-            <div class="profile-info">
-                <div class="profile-name">{{ accountStore.user.name || 'Guest' }}</div>
-                <div class="profile-username">@{{ accountStore.user.username || 'guest' }}</div>
+            <div v-if="accountStore.user" class="profile-info">
+                <div class="profile-name">{{ accountStore.user.name }}</div>
+                <div class="profile-username">@{{ accountStore.user.username }}</div>
             </div>
             <v-icon icon="mdi-menu-down" class="dropdown-icon"></v-icon>
         </button>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { useAuthStore } from '@/stores/authStore'
@@ -46,6 +46,12 @@ export default {
 
         const user = accountStore.user
         const showDropdown = ref(false)
+
+        onMounted(async () => {
+            if (authStore.isAuthorized && !accountStore.user) {
+                await accountStore.fetchUser()
+            }
+        })
 
         const toggleDropdown = () => {
             showDropdown.value = !showDropdown.value
