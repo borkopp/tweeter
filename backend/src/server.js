@@ -12,13 +12,6 @@ app.use(cors());
 app.use(morgan('combined'));
 app.use(express.json());
 
-app.use(session({
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false } 
-}));
-
 app.use('/api/auth', auth);
 app.use('/api/account', account);
 

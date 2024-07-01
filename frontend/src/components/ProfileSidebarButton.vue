@@ -9,8 +9,8 @@
         <button @click="toggleDropdown" class="profile-button">
             <v-icon icon="mdi-account" class="profile-icon"></v-icon>
             <div class="profile-info">
-                <div class="profile-name">{{ accountStore.user.name }}</div>
-                <div class="profile-username">@{{ accountStore.user.username }}</div>
+                <div class="profile-name">{{ accountStore.user.name || 'Guest' }}</div>
+                <div class="profile-username">@{{ accountStore.user.username || 'guest' }}</div>
             </div>
             <v-icon icon="mdi-menu-down" class="dropdown-icon"></v-icon>
         </button>
@@ -33,8 +33,8 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
-import { useAuthStore } from '@/stores/auth'
-import { useAccountStore } from '@/stores/StoreAccount'
+import { useAuthStore } from '@/stores/authStore'
+import { useAccountStore } from '@/stores/accountStore'
 
 export default {
     name: 'ProfileSidebarButton',

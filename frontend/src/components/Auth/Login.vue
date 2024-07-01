@@ -16,7 +16,7 @@
 
 <script>
 import { ref } from 'vue';
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from '@/stores/authStore';
 import router from '@/router';
 import LogoSvg from '@/assets/logo.svg';
 import { useToast } from 'vue-toastification';
@@ -31,7 +31,7 @@ export default {
         const handleLogin = async () => {
             console.log("Login button pressed");
             await authStore.login(username.value, password.value);
-            if (authStore.isAuthorized()) {
+            if (authStore.isAuthorized) {
                 console.log('Login successful');
                 router.push('/');
                 toast.success('Logged in successfully!');
@@ -40,7 +40,6 @@ export default {
                 toast.error('Login failed. Please check your credentials.');
             }
         };
-
 
         return { authStore, username, password, handleLogin, LogoSvg };
     },

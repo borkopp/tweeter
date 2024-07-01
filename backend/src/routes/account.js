@@ -22,7 +22,7 @@ account.get("/:id", authenticateToken, async (req, res) => {
     const client = await pool.connect();
     const result = await client.query(
       "SELECT id, name, username, email FROM users WHERE id = $1",
-      [userId]
+      [req.user.id]
     );
     client.release();
 

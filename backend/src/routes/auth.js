@@ -35,7 +35,6 @@ auth.post('/login', async (req, res) => {
     const user = userResult.rows[0];
 
     const token = jwt.sign({ id: user.id }, TOKEN_SECRET, { expiresIn: parseInt(TOKEN_EXPIRES) });
-    req.session.user = {id: user.id, username};
     res.json({ token, userId: user.id });
   } catch (error) {
     console.error('Login error:', error);

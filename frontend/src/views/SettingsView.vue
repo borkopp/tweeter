@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { useAccountStore } from '@/stores/StoreAccount';
+import { useAccountStore } from '@/stores/accountStore';
 export default {
     setup() {
         const accountStore = useAccountStore();

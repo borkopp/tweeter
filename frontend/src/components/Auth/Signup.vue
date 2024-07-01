@@ -1,6 +1,6 @@
 <script>
 import { ref } from 'vue';
-import { useAuthStore } from '@/stores/auth';
+import { useAuthStore } from '@/stores/authStore';
 import LogoSvg from '@/assets/logo.svg';
 import router from '@/router';
 
