@@ -42,6 +42,7 @@ export const useSessionStore = defineStore('session', () => {
   };
 
   const resetSession = () => {
+    Object.keys(session).forEach(key => delete session[key]);
     Object.assign(session, defaultSession);
   };
 
