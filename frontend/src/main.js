@@ -29,7 +29,8 @@ const config = {
     accounts: 'http://localhost:4000/api/auth/accounts',
     register: 'http://localhost:4000/api/auth/register',
     login: 'http://localhost:4000/api/auth/login',
-    account: 'http://localhost:4000/api/account'
+    account: 'http://localhost:4000/api/account',
+    tweets: 'http://localhost:4000/api/tweets'
   },
   default: {
     account: {
