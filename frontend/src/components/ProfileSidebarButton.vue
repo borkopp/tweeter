@@ -1,5 +1,5 @@
 <template>
-    <router-link v-if="!authStore.isAuthorized" to="/login">
+    <router-link v-if="!isAuthorized" to="/login">
         <button class="login-button">
             <v-icon icon="mdi-login" class="icon"></v-icon>
             Login
@@ -9,8 +9,8 @@
         <button @click="toggleDropdown" class="profile-button">
             <v-icon icon="mdi-account" class="profile-icon"></v-icon>
             <div v-if="accountStore.user" class="profile-info">
-                <div class="profile-name">{{ accountStore.user.name }}</div>
-                <div class="profile-username">@{{ accountStore.user.username }}</div>
+                <div class="profile-name">{{ user.name }}</div>
+                <div class="profile-username">@{{ user.username }}</div>
             </div>
             <v-icon icon="mdi-menu-down" class="dropdown-icon"></v-icon>
         </button>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { useAuthStore } from '@/stores/authStore'
@@ -43,9 +43,17 @@ export default {
         const accountStore = useAccountStore()
         const router = useRouter()
         const toast = useToast()
-
-        const user = accountStore.user
         const showDropdown = ref(false)
+
+        const user = computed(() => accountStore.user)
+        const isAuthorized = computed(() => authStore.isAuthorized)
+
+        watch(() => authStore.isAuthorized, async (isAuthorized) => {
+            if (isAuthorized && !accountStore.user) {
+                await accountStore.fetchUser()
+            }
+        })
+
 
         onMounted(async () => {
             if (authStore.isAuthorized && !accountStore.user) {
@@ -58,11 +66,11 @@ export default {
         }
 
         const handleLogout = () => {
-            authStore.logout()
-            router.push('/login')
-            showDropdown.value = false
-            toast.success('Logged out successfully!')
-        }
+            authStore.logout();
+            router.push('/login');
+            showDropdown.value = false;
+            toast.success('Logged out successfully!');
+        };
 
         return {
             authStore,
@@ -70,8 +78,9 @@ export default {
             showDropdown,
             toggleDropdown,
             handleLogout,
+            toast,
             user,
-            toast
+            isAuthorized
         }
     }
 }

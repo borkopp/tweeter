@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { reactive, computed, inject } from 'vue';
 import { useSessionStore } from './sessionStore';
 import { getJson, postJson} from '@/service/rest/restJson';
+import { useAccountStore } from './accountStore';
 
 export const useAuthStore = defineStore('user', () => {
   const config = inject('config');
@@ -45,6 +46,9 @@ export const useAuthStore = defineStore('user', () => {
       sessionStore.setSession(res.data.token);
       await getUser(sessionStore.session.userId);
       user.password = undefined; 
+
+      const accountStore = useAccountStore();
+      await accountStore.fetchUser();
       return true;
     } else {
       resetUser();
@@ -56,6 +60,8 @@ export const useAuthStore = defineStore('user', () => {
   const logout = () => {
     resetUser();
     sessionStore.clearSession();
+    const accountStore = useAccountStore();
+    accountStore.clearUser();
   };
 
   const isNotAuthorized = computed(() => sessionStore.isNotAuthorized);
