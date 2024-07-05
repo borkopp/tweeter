@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, inject } from 'vue';
 import { useSessionStore } from './sessionStore';
-import { getJson } from '@/service/rest/restJson';
+import { getJson, patchJson } from '@/service/rest/restJson';
 
 export const useAccountStore = defineStore('account', () => {
   const sessionStore = useSessionStore();
@@ -37,10 +37,28 @@ export const useAccountStore = defineStore('account', () => {
     }
   };
 
+  const changeUsername = async (newUsername) => {
+    try {
+      const res = await patchJson(`${restPaths.account}/change-username`, { newUsername }, {
+        p_session: sessionStore.session
+      });
+      if (res.status === 200) {
+        user.value.username = newUsername;
+        console.log('Username updated successfully:', res.data);
+      } else {
+        throw new Error(res.data?.message || res.statusText);
+      }
+    } catch (err) {
+      error.value = err.message || 'Failed to update username';
+      console.log('Error updating username:', error.value);
+      throw err;
+    }
+  };
+
   const clearUser = () => {
     user.value = null;
     error.value = null;
   };
 
-  return { user, error, fetchUser, clearUser };
+  return { user, error, fetchUser, clearUser, changeUsername };
 });

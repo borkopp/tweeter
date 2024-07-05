@@ -18,12 +18,14 @@
 import { onMounted, computed } from 'vue';
 import { useTweetStore } from '@/stores/tweetStore';
 import { useSessionStore } from '@/stores/sessionStore';
+import { useToast } from 'vue-toastification';
 
 export default {
     name: 'TweetsList',
     setup() {
         const tweetStore = useTweetStore();
         const sessionStore = useSessionStore();
+        const toast = useToast();
 
         const tweets = computed(() => tweetStore.tweets);
         const userId = computed(() => sessionStore.session.userId);
@@ -34,6 +36,7 @@ export default {
 
         const deleteTweet = async (tweetId) => {
             await tweetStore.deleteTweet(tweetId);
+            toast.success('Tweet deleted successfully!');
         };
         const formatTimestamp = (timestamp) => {
             return new Date(timestamp).toLocaleString();

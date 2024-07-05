@@ -38,5 +38,29 @@ account.get("/:id", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+account.patch("/change-username", authenticateToken, async (req, res) => {
+  const { newUsername } = req.body;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query(
+      "UPDATE users SET username = $1 WHERE id = $2 RETURNING id, name, username, email",
+      [newUsername, req.user.id]
+    );
+    client.release();
+
+    if (result.rows.length === 0) {
+      console.log("User not found for ID:", req.user.id);
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    console.log("Username updated:", result.rows[0]);
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error("Error updating username:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
   
   export { account };
