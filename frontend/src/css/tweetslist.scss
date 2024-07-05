@@ -1,0 +1,55 @@
+@import 'config';
+
+.tweets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+
+    .tweet {
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 0.5rem;
+        background-color: #fff;
+
+        .tweet-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #555;
+
+            .username {
+                font-weight: bold;
+            }
+        }
+
+        .tweet-content {
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .tweet-actions {
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+
+            button {
+                background: none;
+                border: none;
+                color: #1da1f2;
+                cursor: pointer;
+                font-size: 0.9rem;
+                padding: 0;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+    }
+}

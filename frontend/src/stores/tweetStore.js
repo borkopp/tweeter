@@ -13,17 +13,17 @@ export const useTweetStore = defineStore('tweet', () => {
   const fetchTweets = async () => {
     try {
       const res = await getJson(`${restPaths.tweets}`, {
-        headers: { Authorization: `Bearer ${sessionStore.session.token}` }
-      })
+        headers: { Authorization: `Bearer ${sessionStore.session.token}` },
+      });
       if (res.status === 200) {
-        tweets.splice(0, tweets.length, ...res.data)
+        tweets.splice(0, tweets.length, ...res.data);
       } else {
-        console.error('Failed to fetch tweets:', res.statusText)
+        console.error('Failed to fetch tweets:', res.statusText);
       }
     } catch (error) {
-      console.error('Error fetching tweets:', error)
+      console.error('Error fetching tweets:', error);
     }
-  }
+  };
 
   const postTweet = async (content) => {
     try {
