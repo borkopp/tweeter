@@ -8,7 +8,7 @@
             <div class="tweet-content">{{ tweet.content }}</div>
             <div class="tweet-actions">
                 <button>Like</button>
-                <button>Delete</button>
+                <button v-if="tweet.user_id === userId" @click="deleteTweet(tweet.id)">Delete</button>
             </div>
         </div>
     </div>
@@ -32,6 +32,9 @@ export default {
             await tweetStore.fetchTweets();
         };
 
+        const deleteTweet = async (tweetId) => {
+            await tweetStore.deleteTweet(tweetId);
+        };
         const formatTimestamp = (timestamp) => {
             return new Date(timestamp).toLocaleString();
         };
@@ -42,6 +45,7 @@ export default {
             tweets,
             userId,
             formatTimestamp,
+            deleteTweet,
         };
     },
 };

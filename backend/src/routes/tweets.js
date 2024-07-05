@@ -48,4 +48,27 @@ tweets.get("/", async (req, res) => {
   }
 });
 
+tweets.delete('/:id', authenticateToken, async (req, res) => {
+  const tweetId = req.params.id;
+  const userId = req.user.id;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query(
+      'DELETE FROM tweets WHERE id = $1 AND user_id = $2 RETURNING *',
+      [tweetId, userId]
+    );
+    client.release();
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Tweet not found or not authorized' });
+    }
+
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error deleting tweet:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 export { tweets };
