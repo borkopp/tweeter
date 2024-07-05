@@ -110,6 +110,16 @@ export default {
             }
         };
 
+        const saveName = async () => {
+            try {
+                await accountStore.changeName(newName.value);
+                toast.success('Name updated successfully!');
+                isEditingName.value = false;
+            } catch (error) {
+                toast.error('Failed to update name. Please try again.');
+            }
+        };
+
         return {
             user,
             newUsername,
@@ -122,6 +132,7 @@ export default {
             enableEditing,
             cancelEditing,
             saveUsername,
+            saveName,
         };
     },
 };

@@ -1,16 +1,16 @@
-import express from 'express';
-import pkg from 'pg';
-import authenticateToken  from '../middleware/auth.js';
+import express from "express";
+import pkg from "pg";
+import authenticateToken from "../middleware/auth.js";
 
 const { Pool } = pkg;
 
 // TODO: Move to a .env file
 const pool = new Pool({
-    user: 'borko',
-    host: 'database', 
-    database: 'tweeter',
-    password: 'borko',
-    port: 5432,
+  user: "borko",
+  host: "database",
+  database: "tweeter",
+  password: "borko",
+  port: 5432,
 });
 
 const account = express.Router();
@@ -62,5 +62,29 @@ account.patch("/change-username", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-  
-  export { account };
+
+account.patch("/change-name", authenticateToken, async (req, res) => {
+  const { newName } = req.body;
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query(
+      "UPDATE users SET name = $1 WHERE id = $2 RETURNING id, name, username, email",
+      [newName, req.user.id]
+    );
+    client.release();
+
+    if (result.rows.length === 0) {
+      console.log("User not found for ID:", req.user.id);
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    console.log("Name updated:", result.rows[0]);
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error("Error updating name:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+export { account };

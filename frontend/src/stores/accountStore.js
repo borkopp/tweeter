@@ -55,10 +55,28 @@ export const useAccountStore = defineStore('account', () => {
     }
   };
 
+  const changeName = async (newName) => {
+    try {
+      const res = await patchJson(`${restPaths.account}/change-name`, { newName }, {
+        p_session: sessionStore.session
+      });
+      if (res.status === 200) {
+        user.value.name = newName;
+        console.log('Name updated successfully:', res.data);
+      } else {
+        throw new Error(res.data?.message || res.statusText);
+      }
+    } catch (err) {
+      error.value = err.message || 'Failed to update name';
+      console.log('Error updating name:', error.value);
+      throw err;
+    }
+  };
+
   const clearUser = () => {
     user.value = null;
     error.value = null;
   };
 
-  return { user, error, fetchUser, clearUser, changeUsername };
+  return { user, error, fetchUser, clearUser, changeUsername, changeName };
 });
