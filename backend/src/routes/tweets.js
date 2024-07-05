@@ -24,15 +24,25 @@ tweets.post("/", authenticateToken, async (req, res) => {
       "INSERT INTO tweets (user_id, content) VALUES ($1, $2) RETURNING *",
       [userId, content]
     );
+    
+    const userResult = await client.query(
+      "SELECT username FROM users WHERE id = $1",
+      [userId]
+    );
+    
     client.release();
 
-    res.status(201).json(result.rows[0]);
+    const tweetWithUsername = {
+      ...result.rows[0],
+      username: userResult.rows[0].username
+    };
+
+    res.status(201).json(tweetWithUsername);
   } catch (error) {
     console.error("Error creating tweet:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
 tweets.get("/", async (req, res) => {
   try {
     const client = await pool.connect();

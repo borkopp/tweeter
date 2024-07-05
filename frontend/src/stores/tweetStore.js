@@ -24,7 +24,7 @@ export const useTweetStore = defineStore('tweet', () => {
       console.error('Error fetching tweets:', error);
     }
   };
-
+  
   const postTweet = async (content) => {
     try {
       const res = await postJson(
