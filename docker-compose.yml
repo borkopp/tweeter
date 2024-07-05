@@ -32,21 +32,23 @@ services:
       - tweeter-network
 
   database:
-    build:
-      context: ./database
-      dockerfile: Dockerfile
-    container_name: tweeter-database
-    environment:
-      - POSTGRES_USER=borko
-      - POSTGRES_PASSWORD=borko
-      - POSTGRES_DB=tweeter
-    volumes:
-      - db-data:/var/lib/postgresql/data
-      - ./database/init.sh:/docker-entrypoint-initdb.d/init.sh
-    ports:
-      - "5432:5432"
-    networks:
-      - tweeter-network
+      build:
+        context: ./database
+        dockerfile: Dockerfile
+      container_name: tweeter-database
+      environment:
+        - POSTGRES_USER=borko
+        - POSTGRES_PASSWORD=borko
+        - POSTGRES_DB=tweeter
+      volumes:
+        - db-data:/var/lib/postgresql/data
+        - ./database/init.sh:/docker-entrypoint-initdb.d/init.sh
+        - ./database/sql:/docker-entrypoint-initdb.d/sql
+      ports:
+        - "5432:5432"
+      networks:
+        - tweeter-network
+
 
 networks:
   tweeter-network:
