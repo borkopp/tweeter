@@ -7,8 +7,13 @@
             </div>
             <div class="tweet-content">{{ tweet.content }}</div>
             <div class="tweet-actions">
-                <button>Like</button>
-                <button v-if="tweet.user_id === userId" @click="deleteTweet(tweet.id)">Delete</button>
+                <button @click="toggleLike(tweet)">
+                    <v-icon :icon="tweet.likedByUser ? 'mdi-thumb-up' : 'mdi-thumb-up-outline'" class="icon"></v-icon>
+                    {{ tweet.likes || 0 }}
+                </button>
+                <button v-if="tweet.user_id === userId" @click="deleteTweet(tweet.id)">
+                    <v-icon icon="mdi-delete" class="icon"></v-icon>
+                </button>
             </div>
         </div>
     </div>
@@ -42,6 +47,14 @@ export default {
             return new Date(timestamp).toLocaleString();
         };
 
+        const toggleLike = async (tweet) => {
+            if (tweet.likedByUser) {
+                await tweetStore.unlikeTweet(tweet.id);
+            } else {
+                await tweetStore.likeTweet(tweet.id);
+            }
+        };
+
         onMounted(fetchTweets);
 
         return {
@@ -49,6 +62,7 @@ export default {
             userId,
             formatTimestamp,
             deleteTweet,
+            toggleLike
         };
     },
 };

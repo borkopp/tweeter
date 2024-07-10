@@ -16,7 +16,11 @@ export const useTweetStore = defineStore('tweet', () => {
         headers: { Authorization: `Bearer ${sessionStore.session.token}` },
       });
       if (res.status === 200) {
-        tweets.splice(0, tweets.length, ...res.data);
+        tweets.splice(0, tweets.length, ...res.data.map(tweet => ({
+          ...tweet,
+          likes: tweet.likes_count,
+          likedByUser: tweet.liked_by_user
+        })));
       } else {
         console.error('Failed to fetch tweets:', res.statusText);
       }
@@ -24,7 +28,7 @@ export const useTweetStore = defineStore('tweet', () => {
       console.error('Error fetching tweets:', error);
     }
   };
-  
+
   const postTweet = async (content) => {
     try {
       const res = await postJson(
@@ -62,10 +66,53 @@ export const useTweetStore = defineStore('tweet', () => {
     }
   };
 
+
+const likeTweet = async (tweetId) => {
+  try {
+    const res = await postJson(`${restPaths.tweets}/${tweetId}/like`, {}, {
+      headers: { Authorization: `Bearer ${sessionStore.session.token}` },
+    });
+    if (res.status === 201) {
+      const tweet = tweets.find(t => t.id === tweetId);
+      if (tweet) {
+        tweet.likes++;
+        tweet.likedByUser = true;
+      }
+    } else {
+      console.error('Failed to like tweet:', res.statusText);
+    }
+  } catch (error) {
+    console.error('Error liking tweet:', error);
+  }
+};
+
+const unlikeTweet = async (tweetId) => {
+  try {
+    const res = await deleteJson(`${restPaths.tweets}/${tweetId}/unlike`, {
+      headers: { Authorization: `Bearer ${sessionStore.session.token}` },
+    });
+    if (res.status === 200) {
+      const tweet = tweets.find(t => t.id === tweetId);
+      if (tweet) {
+        tweet.likes--;
+        tweet.likedByUser = false;
+      }
+    } else {
+      console.error('Failed to unlike tweet:', res.statusText);
+    }
+  } catch (error) {
+    console.error('Error unliking tweet:', error);
+  }
+};
+
+
   return {
     tweets,
     fetchTweets,
     postTweet,
-    deleteTweet
+    deleteTweet,
+    likeTweet,
+    unlikeTweet
+
   }
 })
