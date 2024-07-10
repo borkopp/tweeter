@@ -11,7 +11,11 @@ export default defineConfig({
     VueDevTools(),
   ],
   server: {
-    port: 3000
+    port: 3000,
+    watch: {
+      usePolling: true,
+      interval: 100
+    }
   },
   resolve: {
     alias: {
