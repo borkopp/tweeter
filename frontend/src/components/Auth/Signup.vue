@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 import LogoSvg from '@/assets/logo.svg';
 import router from '@/router';
+import { useToast } from 'vue-toastification';
 
 export default {
     name: 'Signup',
@@ -12,14 +13,25 @@ export default {
         const username = ref('');
         const email = ref('');
         const password = ref('');
+        const toast = useToast();
+
+        const isValidUsername = (username) => {
+            const usernameRegex = /^[a-zA-Z0-9._-]+$/;
+            return usernameRegex.test(username);
+        };
 
         const handleRegister = async () => {
             console.log("Register button pressed");
+            if (!isValidUsername(username.value)) {
+                console.log('Invalid username');
+                return;
+            }
             try {
                 const registrationSuccessful = await authStore.register(name.value, username.value, email.value, password.value);
                 if (registrationSuccessful) {
                     console.log('Registration and login successful');
                     router.push('/');
+                    toast.success('Registration successful');
                 } else {
                     console.log('Registration failed:', authStore.error);
                 }

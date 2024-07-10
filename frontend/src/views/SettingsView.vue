@@ -100,7 +100,17 @@ export default {
             }
         };
 
+        const isValidUsername = (username) => {
+            const usernameRegex = /^[a-zA-Z0-9._-]+$/;
+            return usernameRegex.test(username);
+        };
+
         const saveUsername = async () => {
+            if (!isValidUsername(newUsername.value)) {
+                toast.error('Username can only contain letters, numbers, dots, underscores, and hyphens. No spaces allowed.');
+                return;
+            }
+
             try {
                 await accountStore.changeUsername(newUsername.value);
                 toast.success('Username updated successfully!');
@@ -133,6 +143,7 @@ export default {
             cancelEditing,
             saveUsername,
             saveName,
+            isValidUsername,
         };
     },
 };
