@@ -1,18 +1,18 @@
+import dotenv from 'dotenv';
 import { Router } from 'express';
-import authenticateToken from '../middleware/auth.js';
 import jwt from 'jsonwebtoken';
 import pkg from 'pg';
+dotenv.config();
 
 const auth = Router();
 const { Pool } = pkg;
 
-// TODO: Move to a .env file
 const pool = new Pool({
-  user: 'borko',
-  host: 'database', 
-  database: 'tweeter',
-  password: 'borko',
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 
 const { TOKEN_SECRET = 'secret', TOKEN_EXPIRES = '3600' } = process.env;

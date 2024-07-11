@@ -1,15 +1,17 @@
+import dotenv from 'dotenv';
 import express from "express";
 import pkg from "pg";
 import authenticateToken from "../middleware/auth.js";
+dotenv.config();
 
 const { Pool } = pkg;
 
 const pool = new Pool({
-  user: "borko",
-  host: "database",
-  database: "tweeter",
-  password: "borko",
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 
 const tweets = express.Router();
