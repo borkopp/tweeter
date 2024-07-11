@@ -48,6 +48,10 @@
                         <option value="de">German</option>
                         <option value="fr">French</option>
                         <option value="es">Spanish</option>
+                        <option value="da">Danish</option>
+                        <option value="hr">Croatian</option>
+                        <option value="zh">Chinese</option>
+                        <option value="ru">Russian</option>
                     </select>
                 </div>
             </form>

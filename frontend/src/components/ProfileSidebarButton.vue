@@ -2,7 +2,7 @@
     <router-link v-if="!isAuthorized" to="/login">
         <button class="login-button">
             <v-icon icon="mdi-login" class="icon"></v-icon>
-            Login
+            {{ t('login') }}
         </button>
     </router-link>
     <div v-else class="profile-dropdown">
@@ -17,7 +17,7 @@
         <div v-if="showDropdown" class="dropdown-menu">
             <div class="dropdown-item" @click="handleLogout">
                 <v-icon icon="mdi-logout" class="dropdown-item-icon"></v-icon>
-                Logout
+                {{ t('logout') }}
             </div>
         </div>
     </div>
@@ -29,12 +29,14 @@ import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { useAuthStore } from '@/stores/authStore'
 import { useAccountStore } from '@/stores/accountStore'
+import { useI18nStore } from "@/stores/i18nStore";
 
 export default {
     name: 'ProfileSidebarButton',
     setup() {
         const authStore = useAuthStore()
         const accountStore = useAccountStore()
+        const i18nStore = useI18nStore()
         const router = useRouter()
         const toast = useToast()
         const showDropdown = ref(false)
@@ -63,7 +65,7 @@ export default {
             authStore.logout();
             router.push('/login');
             showDropdown.value = false;
-            toast.success('Logged out successfully!');
+            toast.success(i18nStore.t('logout_success'));
         };
 
         return {
@@ -74,7 +76,8 @@ export default {
             handleLogout,
             toast,
             user,
-            isAuthorized
+            isAuthorized,
+            t: i18nStore.t
         }
     }
 }

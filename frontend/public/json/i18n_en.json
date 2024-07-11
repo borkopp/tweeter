@@ -16,7 +16,27 @@
     "username_updated": "Username updated successfully",
     "username_update_failed": "Failed to update username",
     "name_updated": "Name updated successfully",
-    "name_update_failed": "Failed to update name"
+    "name_update_failed": "Failed to update name",
+    "login": "Login",
+    "no_account": "Don't have an account?",
+    "sign_up": "Sign Up",
+    "login_success": "Logged in successfully!",
+    "login_failed": "Login failed. Please check your credentials.",
+    "have_account": "Already have an account?",
+    "registration_successful": "Registration successful",
+    "registration_failed": "Registration failed",
+    "registration_error": "Error during registration",
+    "logout": "Logout",
+    "logout_success": "Logged out successfully!",
+    "home": "Home",
+    "write_something": "Write something...",
+    "tweet": "Tweet",
+    "tweet_empty": "Tweet content cannot be empty!",
+    "tweet_posted": "Tweet posted successfully!",
+    "tweet_error": "Error posting tweet:",
+    "tweet_failed": "Failed to post tweet. Please try again.",
+    "delete": "Delete",
+    "tweet_deleted": "Tweet deleted successfully!"
   },
   "dictionary": {}
 }

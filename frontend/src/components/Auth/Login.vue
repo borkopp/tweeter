@@ -3,14 +3,14 @@
         <div class="logo">
             <img :src="LogoSvg" alt="Logo" />
         </div>
-        <h2>Login</h2>
+        <h2>{{ t('login') }}</h2>
         <form @submit.prevent="handleLogin">
-            <input v-model="username" placeholder="Username" required />
-            <input type="password" v-model="password" placeholder="Password" required />
-            <button type="submit"><v-icon icon="mdi-login" class="icon"></v-icon>Login</button>
+            <input v-model="username" :placeholder="t('username')" required />
+            <input type="password" v-model="password" :placeholder="t('password')" required />
+            <button type="submit"><v-icon icon="mdi-login" class="icon"></v-icon>{{ t('login') }}</button>
         </form>
-        <p v-if="authStore.error" style="color: red;">{{ authStore.error }}</p>
-        <p>Don't have an account? <router-link to="/signup">Sign Up</router-link></p>
+        <p v-if="authStore.error" style="color: red;">{{ t(authStore.error) }}</p>
+        <p>{{ t('no_account') }} <router-link to="/signup">{{ t('sign_up') }}</router-link></p>
     </div>
 </template>
 
@@ -20,10 +20,12 @@ import { useAuthStore } from '@/stores/authStore';
 import router from '@/router';
 import LogoSvg from '@/assets/logo.svg';
 import { useToast } from 'vue-toastification';
+import { useI18nStore } from '@/stores/i18nStore';
 
 export default {
     setup() {
         const authStore = useAuthStore();
+        const i18n = useI18nStore();
         const username = ref('');
         const password = ref('');
         const toast = useToast();
@@ -32,13 +34,13 @@ export default {
             await authStore.login(username.value, password.value);
             if (authStore.isAuthorized) {
                 router.push('/');
-                toast.success('Logged in successfully!');
+                toast.success(i18n.t('login_success'));
             } else {
-                toast.error('Login failed. Please check your credentials.');
+                toast.error(i18n.t('login_failed'));
             }
         };
 
-        return { authStore, username, password, handleLogin, LogoSvg };
+        return { authStore, username, password, handleLogin, LogoSvg, t: i18n.t };
     },
 };
 </script>

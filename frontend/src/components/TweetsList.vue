@@ -13,6 +13,7 @@
                 </button>
                 <button v-if="tweet.user_id === userId" @click="deleteTweet(tweet.id)">
                     <v-icon icon="mdi-delete" class="icon"></v-icon>
+                    {{ t('delete') }}
                 </button>
             </div>
         </div>
@@ -23,6 +24,7 @@
 import { onMounted, computed } from 'vue';
 import { useTweetStore } from '@/stores/tweetStore';
 import { useSessionStore } from '@/stores/sessionStore';
+import { useI18nStore } from '@/stores/i18nStore';
 import { useToast } from 'vue-toastification';
 
 export default {
@@ -30,6 +32,7 @@ export default {
     setup() {
         const tweetStore = useTweetStore();
         const sessionStore = useSessionStore();
+        const i18nStore = useI18nStore();
         const toast = useToast();
 
         const tweets = computed(() => tweetStore.tweets);
@@ -41,8 +44,9 @@ export default {
 
         const deleteTweet = async (tweetId) => {
             await tweetStore.deleteTweet(tweetId);
-            toast.success('Tweet deleted successfully!');
+            toast.success(i18nStore.t('tweet_deleted'));
         };
+
         const formatTimestamp = (timestamp) => {
             return new Date(timestamp).toLocaleString();
         };
@@ -62,7 +66,8 @@ export default {
             userId,
             formatTimestamp,
             deleteTweet,
-            toggleLike
+            toggleLike,
+            t: i18nStore.t
         };
     },
 };
