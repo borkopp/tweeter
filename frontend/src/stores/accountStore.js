@@ -37,6 +37,7 @@ export const useAccountStore = defineStore('account', () => {
     }
   };
 
+
   const changeUsername = async (newUsername) => {
     try {
       const res = await patchJson(`${restPaths.account}/change-username`, { newUsername }, {

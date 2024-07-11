@@ -46,7 +46,7 @@ const routes = [
         toast.error('You are not logged in!');
       }
     }
-  }
+  },
 ];
 
 const router = createRouter({

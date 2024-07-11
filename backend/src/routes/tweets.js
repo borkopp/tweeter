@@ -43,6 +43,8 @@ tweets.post("/", authenticateToken, async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+
 tweets.get("/", authenticateToken, async (req, res) => {
   const userId = req.user.id;
 

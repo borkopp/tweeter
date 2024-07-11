@@ -15,12 +15,6 @@
             <v-icon icon="mdi-menu-down" class="dropdown-icon"></v-icon>
         </button>
         <div v-if="showDropdown" class="dropdown-menu">
-            <router-link to="/profile">
-                <div class="dropdown-item">
-                    <v-icon icon="mdi-account" class="dropdown-item-icon"></v-icon>
-                    My Profile
-                </div>
-            </router-link>
             <div class="dropdown-item" @click="handleLogout">
                 <v-icon icon="mdi-logout" class="dropdown-item-icon"></v-icon>
                 Logout
