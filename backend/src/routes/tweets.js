@@ -14,6 +14,17 @@ const pool = new Pool({
 
 const tweets = express.Router();
 
+/**
+ * Creates a new tweet for the authenticated user.
+ *
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} req.body - The request body containing the tweet content.
+ * @param {string} req.body.content - The content of the new tweet.
+ * @param {Object} req.user - The authenticated user object.
+ * @param {number} req.user.id - The ID of the authenticated user.
+ * @param {Object} res - The HTTP response object.
+ * @returns {Promise<Object>} - The created tweet with the username.
+ */
 tweets.post("/", authenticateToken, async (req, res) => {
   const { content } = req.body;
   const userId = req.user.id;
@@ -45,6 +56,15 @@ tweets.post("/", authenticateToken, async (req, res) => {
 });
 
 
+/**
+ * Fetches a list of tweets for the authenticated user, including the username, like count, and whether the user has liked the tweet.
+ *
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} req.user - The authenticated user object.
+ * @param {number} req.user.id - The ID of the authenticated user.
+ * @param {Object} res - The HTTP response object.
+ * @returns {Promise<Object[]>} - An array of tweet objects with the username, like count, and liked status.
+ */
 tweets.get("/", authenticateToken, async (req, res) => {
   const userId = req.user.id;
 
@@ -71,6 +91,17 @@ tweets.get("/", authenticateToken, async (req, res) => {
   }
 });
 
+/**
+ * Deletes a tweet for the authenticated user.
+ *
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} req.params - The request parameters.
+ * @param {number} req.params.id - The ID of the tweet to delete.
+ * @param {Object} req.user - The authenticated user object.
+ * @param {number} req.user.id - The ID of the authenticated user.
+ * @param {Object} res - The HTTP response object.
+ * @returns {Promise<Object>} - The deleted tweet object.
+ */
 tweets.delete('/:id', authenticateToken, async (req, res) => {
   const tweetId = req.params.id;
   const userId = req.user.id;
@@ -94,6 +125,17 @@ tweets.delete('/:id', authenticateToken, async (req, res) => {
   }
 });
 
+/**
+ * Likes a tweet for the authenticated user.
+ *
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} req.params - The request parameters.
+ * @param {number} req.params.id - The ID of the tweet to like.
+ * @param {Object} req.user - The authenticated user object.
+ * @param {number} req.user.id - The ID of the authenticated user.
+ * @param {Object} res - The HTTP response object.
+ * @returns {Promise<Object>} - The liked tweet object.
+ */
 tweets.post('/:id/like', authenticateToken, async (req, res) => {
   const tweetId = req.params.id;
   const userId = req.user.id;
@@ -117,6 +159,17 @@ tweets.post('/:id/like', authenticateToken, async (req, res) => {
   }
 });
 
+/**
+ * Removes a like for the authenticated user on the specified tweet.
+ *
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} req.params - The request parameters.
+ * @param {number} req.params.id - The ID of the tweet to unlike.
+ * @param {Object} req.user - The authenticated user object.
+ * @param {number} req.user.id - The ID of the authenticated user.
+ * @param {Object} res - The HTTP response object.
+ * @returns {Promise<Object>} - The unlike tweet object.
+ */
 tweets.delete('/:id/unlike', authenticateToken, async (req, res) => {
   const tweetId = req.params.id;
   const userId = req.user.id;

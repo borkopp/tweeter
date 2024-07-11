@@ -10,6 +10,17 @@ export const useAccountStore = defineStore('account', () => {
   const config = inject('config');
   const restPaths = config.restPaths;
 
+  /**
+   * Fetches the user data from the server based on the current session.
+   *
+   * This function is responsible for retrieving the user data from the server using the
+   * current session information. If the session is valid and contains a user ID, the
+   * function will make a GET request to the server to fetch the user data. The fetched
+   * user data is then stored in the `user` reactive reference.
+   *
+   * If there is an error during the fetch process, the error message is stored in the
+   * `error` reactive reference, and a console log message is displayed.
+   */
   const fetchUser = async () => {
     const session = sessionStore.session;
 
@@ -35,6 +46,17 @@ export const useAccountStore = defineStore('account', () => {
   };
 
 
+  /**
+   * Updates the user's username in the server and the local state.
+   *
+   * This function is responsible for sending a PATCH request to the server to update the
+   * user's username. If the request is successful, the `username` property of the `user`
+   * object is updated with the new value. If there is an error, the error message is
+   * stored in the `error` reactive reference and logged to the console.
+   *
+   * @param {string} newUsername - The new username to be set for the user.
+   * @throws {Error} If there is an error updating the username.
+   */
   const changeUsername = async (newUsername) => {
     try {
       const res = await patchJson(`${restPaths.account}/change-username`, { newUsername }, {
@@ -52,6 +74,17 @@ export const useAccountStore = defineStore('account', () => {
     }
   };
 
+  /**
+   * Updates the user's name in the server and the local state.
+   *
+   * This function is responsible for sending a PATCH request to the server to update the
+   * user's name. If the request is successful, the `name` property of the `user`
+   * object is updated with the new value. If there is an error, the error message is
+   * stored in the `error` reactive reference and logged to the console.
+   *
+   * @param {string} newName - The new name to be set for the user.
+   * @throws {Error} If there is an error updating the name.
+   */
   const changeName = async (newName) => {
     try {
       const res = await patchJson(`${restPaths.account}/change-name`, { newName }, {
@@ -69,6 +102,18 @@ export const useAccountStore = defineStore('account', () => {
     }
   };
 
+  /**
+   * Updates the user's password in the server.
+   *
+   * This function is responsible for sending a PATCH request to the server to update the
+   * user's password. If the request is successful, a success message is logged to the console.
+   * If there is an error, the error message is stored in the `error` reactive reference and
+   * logged to the console.
+   *
+   * @param {string} currentPassword - The user's current password.
+   * @param {string} newPassword - The new password to be set for the user.
+   * @throws {Error} If there is an error updating the password.
+   */
   const changePassword = async (currentPassword, newPassword) => {
     try {
       const res = await patchJson(`${restPaths.account}/change-password`, { currentPassword, newPassword }, {
@@ -86,6 +131,9 @@ export const useAccountStore = defineStore('account', () => {
     }
   };
 
+  /**
+   * Clears the user and error values in the account store.
+   */
   const clearUser = () => {
     user.value = null;
     error.value = null;

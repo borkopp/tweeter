@@ -1,7 +1,9 @@
 {
   "devDependencies": {
+    "docdash": "^2.0.2",
     "jsdoc": "^4.0.3"
   },
   "scripts": {
-    "doc": "jsdoc -c jsdoc.json"}
+    "jsdoc": "jsdoc -c jsdoc.json frontend/src backend/src"
+  }
 }

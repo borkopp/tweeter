@@ -10,6 +10,15 @@ export const useTweetStore = defineStore('tweet', () => {
 
   const tweets = reactive([])
 
+  /**
+   * Fetches the latest tweets from the server and updates the local tweet store.
+   *
+   * This function sends a GET request to the `${restPaths.tweets}` endpoint with the
+   * authorization token from the session store. If the request is successful (status 200),
+   * the function updates the `tweets` array in the store with the fetched tweet data,
+   * mapping the `likes_count` and `liked_by_user` properties to `likes` and `likedByUser`
+   * respectively. If the request fails, an error message is logged to the console.
+   */
   const fetchTweets = async () => {
     try {
       const res = await getJson(`${restPaths.tweets}`, {
@@ -29,6 +38,17 @@ export const useTweetStore = defineStore('tweet', () => {
     }
   };
 
+  /**
+   * Posts a new tweet to the server.
+   *
+   * This function sends a POST request to the `${restPaths.tweets}` endpoint with the
+   * authorization token from the session store and the provided `content` as the request
+   * body. If the request is successful (status 201), the function adds the new tweet
+   * to the beginning of the `tweets` array in the store. If the request fails, an error
+   * message is logged to the console.
+   *
+   * @param {string} content - The content of the new tweet.
+   */
   const postTweet = async (content) => {
     try {
       const res = await postJson(
@@ -48,6 +68,16 @@ export const useTweetStore = defineStore('tweet', () => {
     }
   }
 
+  /**
+   * Deletes a tweet from the server.
+   *
+   * This function sends a DELETE request to the `${restPaths.tweets}/${tweetId}` endpoint with the
+   * authorization token from the session store. If the request is successful (status 200), the
+   * function removes the deleted tweet from the `tweets` array in the store. If the request fails,
+   * an error message is logged to the console.
+   *
+   * @param {string} tweetId - The ID of the tweet to be deleted.
+   */
   const deleteTweet = async (tweetId) => {
     try {
       const res = await deleteJson(`${restPaths.tweets}/${tweetId}`, {
@@ -67,6 +97,16 @@ export const useTweetStore = defineStore('tweet', () => {
   };
 
 
+/**
+ * Likes a tweet on the server.
+ *
+ * This function sends a POST request to the `${restPaths.tweets}/${tweetId}/like` endpoint with the
+ * authorization token from the session store. If the request is successful (status 201), the
+ * function increments the `likes` count of the tweet and sets the `likedByUser` flag to `true` in
+ * the `tweets` array in the store. If the request fails, an error message is logged to the console.
+ *
+ * @param {string} tweetId - The ID of the tweet to be liked.
+ */
 const likeTweet = async (tweetId) => {
   try {
     const res = await postJson(`${restPaths.tweets}/${tweetId}/like`, {}, {
@@ -86,6 +126,16 @@ const likeTweet = async (tweetId) => {
   }
 };
 
+/**
+ * Removes the user's like from a tweet on the server.
+ *
+ * This function sends a DELETE request to the `${restPaths.tweets}/${tweetId}/unlike` endpoint with the
+ * authorization token from the session store. If the request is successful (status 200), the
+ * function decrements the `likes` count of the tweet and sets the `likedByUser` flag to `false` in
+ * the `tweets` array in the store. If the request fails, an error message is logged to the console.
+ *
+ * @param {string} tweetId - The ID of the tweet to be unliked.
+ */
 const unlikeTweet = async (tweetId) => {
   try {
     const res = await deleteJson(`${restPaths.tweets}/${tweetId}/unlike`, {

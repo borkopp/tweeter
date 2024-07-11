@@ -15,6 +15,16 @@ const pool = new Pool({
 
 const account = express.Router();
 
+/**
+ * Fetches the user information for the specified user ID.
+ *
+ * @param {Object} req - The Express request object.
+ * @param {Object} req.params - The route parameters.
+ * @param {string} req.params.id - The ID of the user to fetch.
+ * @param {Object} res - The Express response object.
+ * @returns {Promise<Object>} - The user information, including id, name, username, and email.
+ * @throws {Error} - If there is an error fetching the user information.
+ */
 account.get("/:id", authenticateToken, async (req, res) => {
   const userId = req.params.id;
 
@@ -38,6 +48,13 @@ account.get("/:id", authenticateToken, async (req, res) => {
   }
 });
 
+/**
+ * Updates the username for the authenticated user.
+ *
+ * @param {string} newUsername - The new username to set for the user.
+ * @returns {Promise<Object>} - The updated user information, including id, name, username, and email.
+ * @throws {Error} - If there is an error updating the username.
+ */
 account.patch("/change-username", authenticateToken, async (req, res) => {
   const { newUsername } = req.body;
 
@@ -61,6 +78,13 @@ account.patch("/change-username", authenticateToken, async (req, res) => {
   }
 });
 
+/**
+ * Updates the name for the authenticated user.
+ *
+ * @param {string} newName - The new name to set for the user.
+ * @returns {Promise<Object>} - The updated user information, including id, name, username, and email.
+ * @throws {Error} - If there is an error updating the name.
+ */
 account.patch("/change-name", authenticateToken, async (req, res) => {
   const { newName } = req.body;
 
@@ -85,6 +109,14 @@ account.patch("/change-name", authenticateToken, async (req, res) => {
 });
 
 
+/**
+ * Updates the password for the authenticated user.
+ *
+ * @param {string} currentPassword - The user's current password.
+ * @param {string} newPassword - The new password to set for the user.
+ * @returns {Promise<Object>} - A success message indicating the password was updated successfully.
+ * @throws {Error} - If there is an error updating the password, such as the current password being incorrect.
+ */
 account.patch("/change-password", authenticateToken, async (req, res) => {
   const { currentPassword, newPassword } = req.body;
   const userId = req.user.id;
