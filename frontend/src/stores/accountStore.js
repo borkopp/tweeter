@@ -69,10 +69,27 @@ export const useAccountStore = defineStore('account', () => {
     }
   };
 
+  const changePassword = async (currentPassword, newPassword) => {
+    try {
+      const res = await patchJson(`${restPaths.account}/change-password`, { currentPassword, newPassword }, {
+        p_session: sessionStore.session
+      });
+      if (res.status === 200) {
+        console.log('Password updated successfully');
+      } else {
+        throw new Error(res.data?.message || res.statusText);
+      }
+    } catch (err) {
+      error.value = err.message || 'Failed to update password';
+      console.log('Error updating password:', error.value);
+      throw err;
+    }
+  };
+
   const clearUser = () => {
     user.value = null;
     error.value = null;
   };
 
-  return { user, error, fetchUser, clearUser, changeUsername, changeName };
+  return { user, error, fetchUser, clearUser, changeUsername, changeName, changePassword };
 });

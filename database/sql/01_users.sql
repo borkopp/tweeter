@@ -28,17 +28,22 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger to automatically hash passwords before insertion
-CREATE OR REPLACE FUNCTION trigger_hash_password_on_insert()
+-- Trigger to automatically hash passwords before insertion or update
+CREATE OR REPLACE FUNCTION trigger_hash_password_on_insert_or_update()
 RETURNS TRIGGER
 AS $$
 BEGIN
-    NEW.password := hash_password(NEW.password);
+    IF TG_OP = 'INSERT' OR (TG_OP = 'UPDATE' AND NEW.password IS DISTINCT FROM OLD.password) THEN
+        NEW.password := hash_password(NEW.password);
+    END IF;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER hash_password_on_insert
-BEFORE INSERT ON users
+DROP TRIGGER IF EXISTS hash_password_on_insert ON users;
+
+CREATE TRIGGER hash_password_on_insert_or_update
+BEFORE INSERT OR UPDATE ON users
 FOR EACH ROW
-EXECUTE PROCEDURE trigger_hash_password_on_insert();
+EXECUTE PROCEDURE trigger_hash_password_on_insert_or_update();
+

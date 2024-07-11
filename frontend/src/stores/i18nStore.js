@@ -5,7 +5,8 @@ import { getJson } from '@/service/rest/restJson';
 export const useI18nStore = defineStore('i18n', () => {
   const config = inject('config');
 
-  const lang = ref(config.defaultLanguage || 'en');
+  const savedLanguage = localStorage.getItem('selectedLanguage') || config.defaultLanguage;
+  const lang = ref(savedLanguage);
   const phrases = reactive({});
   const dictionary = reactive({});
 
@@ -13,7 +14,7 @@ export const useI18nStore = defineStore('i18n', () => {
     try {
       const url = config.apiRoot.replace('$1', language ?? lang.value);
       const response = await getJson(url);
-      const i18nData = response.data; 
+      const i18nData = response.data;
       Object.assign(phrases, i18nData.phrases);
       Object.assign(dictionary, i18nData.dictionary);
     } catch (error) {
@@ -25,9 +26,10 @@ export const useI18nStore = defineStore('i18n', () => {
     lang.value = language ?? config.defaultLanguage;
     await loadI18n(lang.value);
     document.documentElement.lang = lang.value;
+    localStorage.setItem('selectedLanguage', lang.value);
   };
 
-  changeLang(config.defaultLanguage);
+  changeLang(savedLanguage);
 
   const t = (key) => {
     return phrases[key] || key;

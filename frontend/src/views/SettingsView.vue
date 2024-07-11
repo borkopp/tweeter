@@ -2,7 +2,7 @@
     <div class="settings-container">
         <main class="main-content">
             <h2>{{ t('settings') }}</h2>
-            <form>
+            <form @submit.prevent="saveChanges">
                 <p class="settings-title">{{ t('email') }}</p>
                 <div class="settings-field">
                     <input readonly :value="user.email" />
@@ -48,8 +48,8 @@
                         <option value="de">German</option>
                         <option value="fr">French</option>
                         <option value="es">Spanish</option>
-                        <option value="da">Danish</option>
                         <option value="hr">Croatian</option>
+                        <option value="da">Danish</option>
                         <option value="zh">Chinese</option>
                         <option value="ru">Russian</option>
                     </select>
@@ -134,6 +134,23 @@ export default {
             }
         };
 
+        const savePassword = async () => {
+            if (!currentPassword.value || !newPassword.value) {
+                toast.error(i18nStore.t('password_fields_required'));
+                return;
+            }
+
+            try {
+                await accountStore.changePassword(currentPassword.value, newPassword.value);
+                toast.success(i18nStore.t('password_updated'));
+                isEditingPassword.value = false;
+                currentPassword.value = '';
+                newPassword.value = '';
+            } catch (error) {
+                toast.error(i18nStore.t('password_update_failed'));
+            }
+        };
+
         const changeLanguage = () => {
             i18nStore.changeLang(selectedLanguage.value);
         };
@@ -151,6 +168,7 @@ export default {
             cancelEditing,
             saveUsername,
             saveName,
+            savePassword,
             isValidUsername,
             selectedLanguage,
             changeLanguage,
