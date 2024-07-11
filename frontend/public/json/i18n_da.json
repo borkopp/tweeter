@@ -36,7 +36,10 @@
       "tweet_error": "Fejl ved postning af tweet:",
       "tweet_failed": "Tweet kunne ikke postes. Prøv igen.",
       "delete": "Slet",
-      "tweet_deleted": "Tweet slettet!"
+      "tweet_deleted": "Tweet slettet!",
+      "password_fields_required": "Adgangskode og ny adgangskode skal udfyldes.",
+      "password_updated": "Adgangskode opdateret",
+      "password_update_failed": "Kunne ikke opdatere adgangskode"
     },
     "dictionary": {}
   }

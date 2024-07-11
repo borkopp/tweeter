@@ -36,7 +36,10 @@
       "tweet_error": "Erreur lors de la publication du tweet:",
       "tweet_failed": "Échec de la publication du tweet. Veuillez réessayer.",
       "delete": "Supprimer",
-      "tweet_deleted": "Tweet supprimé avec succès!"
+      "tweet_deleted": "Tweet supprimé avec succès!",
+      "password_fields_required": "Les champs mot de passe et nouveau mot de passe doivent être renseignés.",
+      "password_updated": "Mot de passe mis à jour avec succès",
+      "password_update_failed": "Échec de la mise à jour du mot de passe"
     },
     "dictionary": {}
   }

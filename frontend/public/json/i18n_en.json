@@ -36,7 +36,10 @@
     "tweet_error": "Error posting tweet:",
     "tweet_failed": "Failed to post tweet. Please try again.",
     "delete": "Delete",
-    "tweet_deleted": "Tweet deleted successfully!"
+    "tweet_deleted": "Tweet deleted successfully!",
+    "password_fields_required": "Password and new password fields must be filled.",
+    "password_updated": "Password updated",
+    "password_update_failed": "Failed to update password"
   },
   "dictionary": {}
 }

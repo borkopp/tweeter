@@ -36,7 +36,10 @@
       "tweet_error": "发布推文时出错：",
       "tweet_failed": "推文发布失败。请重试。",
       "delete": "删除",
-      "tweet_deleted": "推文删除成功！"
+      "tweet_deleted": "推文删除成功！",
+      "password_fields_required": "密码和新密码字段必须填写。",
+      "password_updated": "密码更新成功",
+      "password_update_failed": "密码更新失败"
     },
     "dictionary": {}
   }

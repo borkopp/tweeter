@@ -36,7 +36,10 @@
     "tweet_error": "Fehler beim Posten des Tweets:",
     "tweet_failed": "Tweet konnte nicht gepostet werden. Bitte versuchen Sie es erneut.",
     "delete": "Löschen",
-    "tweet_deleted": "Tweet erfolgreich gelöscht!"
+    "tweet_deleted": "Tweet erfolgreich gelöscht!",
+    "password_fields_required": "Aktuelles und neues Passwort sind erforderlich.",
+    "password_updated": "Passwort erfolgreich aktualisiert",
+    "password_update_failed": "Passwort konnte nicht aktualisiert werden"
   },
   "dictionary": {}
 }

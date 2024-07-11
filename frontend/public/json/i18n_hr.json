@@ -36,7 +36,10 @@
       "tweet_error": "Pogreška pri objavljivanju tweeta:",
       "tweet_failed": "Tweet nije uspješno objavljen. Pokušajte ponovno.",
       "delete": "Izbriši",
-      "tweet_deleted": "Tweet uspješno izbrisan!"
+      "tweet_deleted": "Tweet uspješno izbrisan!",
+      "password_fields_required": "Polja lozinke moraju biti popunjena.",
+      "password_updated": "Lozinka uspješno ažurirana",
+      "password_update_failed": "Neuspješno ažuriranje lozinke"
     },
     "dictionary": {}
   }
