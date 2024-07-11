@@ -9,7 +9,7 @@ lerna-debug.log*
 
 #docs
 docs/
-doc/
+
 
 #env
 .env
