@@ -1,0 +1,22 @@
+{
+  "phrases": {
+    "settings": "Settings",
+    "email": "Email",
+    "username": "Username",
+    "enter_new_username": "Enter new username",
+    "name": "Name",
+    "enter_new_name": "Enter new name",
+    "password": "Password",
+    "current_password": "Current Password",
+    "new_password": "New Password",
+    "save": "Save",
+    "cancel": "Cancel",
+    "change_language": "Change Language",
+    "invalid_username": "Invalid username",
+    "username_updated": "Username updated successfully",
+    "username_update_failed": "Failed to update username",
+    "name_updated": "Name updated successfully",
+    "name_update_failed": "Failed to update name"
+  },
+  "dictionary": {}
+}

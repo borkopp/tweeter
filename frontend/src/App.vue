@@ -1,10 +1,7 @@
 <script setup>
 import LeftSidebar from '@/components/Sidebar.vue'
-import storeInitialize from '@/stores/StoreInitialize'
-
-
-const initializer = storeInitialize()
-initializer.initialize();
+import { useI18nStore } from '@/stores/i18nStore'
+useI18nStore();
 </script>
 <template>
   <div id="app" class="app-container">

@@ -1,0 +1,23 @@
+{
+    "phrases": {
+      "settings": "Einstellungen",
+      "email": "E-Mail",
+      "username": "Benutzername",
+      "enter_new_username": "Neuen Benutzernamen eingeben",
+      "name": "Name",
+      "enter_new_name": "Neuen Namen eingeben",
+      "password": "Passwort",
+      "current_password": "Aktuelles Passwort",
+      "new_password": "Neues Passwort",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "change_language": "Sprache ändern",
+      "invalid_username": "Ungültiger Benutzername",
+      "username_updated": "Benutzername erfolgreich aktualisiert",
+      "username_update_failed": "Aktualisierung des Benutzernamens fehlgeschlagen",
+      "name_updated": "Name erfolgreich aktualisiert",
+      "name_update_failed": "Aktualisierung des Namens fehlgeschlagen"
+    },
+    "dictionary": {}
+  }
+  

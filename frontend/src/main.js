@@ -25,6 +25,8 @@ const vuetify = createVuetify({
 
 
 const config = {
+  apiRoot: '/json/i18n_$1.json',
+  defaultLanguage: 'en',
   restPaths: {
     accounts: 'http://localhost:4000/api/auth/accounts',
     register: 'http://localhost:4000/api/auth/register',

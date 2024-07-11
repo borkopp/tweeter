@@ -12,7 +12,6 @@ export const useAccountStore = defineStore('account', () => {
 
   const fetchUser = async () => {
     const session = sessionStore.session;
-    console.log('Fetching user with session:', session);
 
     if (!session || !session.userId) {
       console.log('No user session or userId');
@@ -26,7 +25,6 @@ export const useAccountStore = defineStore('account', () => {
       });
       if (res.status === 200) {
         user.value = res.data;
-        console.log('User fetched successfully:', user.value);
       } else {
         error.value = res.data?.message || res.statusText;
         console.log('Failed to fetch user:', error.value);
