@@ -4,7 +4,7 @@
 Tweeter is a simple, full-stack Twitter alternative with authentication, developed by Borko Petrevski (IN).
 
 ## Project Documentation
-For detailed project documentation and architecture overview, visit:
+For detailed project documentation visit:
 https://miro.com/app/board/uXjVKcXZiZI=/?share_link_id=200809234493
 
 ## Technologies Used
