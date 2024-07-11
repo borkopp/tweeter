@@ -21,7 +21,7 @@ https://miro.com/app/board/uXjVKcXZiZI=/?share_link_id=200809234493
 
 ## Project Structure
 - `/frontend`: Vue.js frontend application
-- `/backend`: Node.js backend server
+- `/backend`: Express backend server
 - `/database`: PostgreSQL database scripts and configurations
 
 ## Setup and Installation
