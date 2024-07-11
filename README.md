@@ -1,7 +1,7 @@
 # Tweeter - Full-Stack Twitter Alternative
 
 ## Overview
-Tweeter is a simple, full-stack Twitter alternative with authentication, developed by Borko Petrevski (IN). This project demonstrates a modern web application architecture using Vue.js for the frontend and Node.js for the backend, with PostgreSQL as the database.
+Tweeter is a simple, full-stack Twitter alternative with authentication, developed by Borko Petrevski (IN).
 
 ## Project Documentation
 For detailed project documentation and architecture overview, visit:
