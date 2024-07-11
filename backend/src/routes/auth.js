@@ -28,7 +28,6 @@ const { TOKEN_SECRET = 'secret', TOKEN_EXPIRES = '3600' } = process.env;
  */
 auth.post('/login', async (req, res) => {
   const { username, password } = req.body;
-  console.log('Login attempt with username:', username, 'and password:', password);
   try {
     const client = await pool.connect();
     const result = await client.query('SELECT check_password($1, $2) AS valid', [username, password]);
@@ -36,7 +35,6 @@ auth.post('/login', async (req, res) => {
     client.release();
 
     if (!valid) {
-      console.log('Invalid credentials for user:', username);
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
@@ -64,7 +62,6 @@ auth.post('/login', async (req, res) => {
  */
 auth.post('/register', async (req, res) => {
   const { name, username, email, password } = req.body;
-  console.log('Register attempt with username:', username);
   try {
     const client = await pool.connect();
     const result = await client.query(
@@ -72,7 +69,6 @@ auth.post('/register', async (req, res) => {
       [name, username, email, password]
     );
     client.release();
-    console.log('User registered with ID:', result.rows[0].id);
     res.status(201).json({ userId: result.rows[0].id });
   } catch (error) {
     console.error('Register error:', error);

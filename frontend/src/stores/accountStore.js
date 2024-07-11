@@ -14,7 +14,6 @@ export const useAccountStore = defineStore('account', () => {
     const session = sessionStore.session;
 
     if (!session || !session.userId) {
-      console.log('No user session or userId');
       return;
     }
 
@@ -43,7 +42,6 @@ export const useAccountStore = defineStore('account', () => {
       });
       if (res.status === 200) {
         user.value.username = newUsername;
-        console.log('Username updated successfully:', res.data);
       } else {
         throw new Error(res.data?.message || res.statusText);
       }
@@ -61,7 +59,6 @@ export const useAccountStore = defineStore('account', () => {
       });
       if (res.status === 200) {
         user.value.name = newName;
-        console.log('Name updated successfully:', res.data);
       } else {
         throw new Error(res.data?.message || res.statusText);
       }

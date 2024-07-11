@@ -31,7 +31,6 @@ account.get("/:id", authenticateToken, async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    console.log("User found:", result.rows[0]);
     res.json(result.rows[0]);
   } catch (error) {
     console.error("Error fetching user:", error);
@@ -55,7 +54,6 @@ account.patch("/change-username", authenticateToken, async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    console.log("Username updated:", result.rows[0]);
     res.json(result.rows[0]);
   } catch (error) {
     console.error("Error updating username:", error);
@@ -79,7 +77,6 @@ account.patch("/change-name", authenticateToken, async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    console.log("Name updated:", result.rows[0]);
     res.json(result.rows[0]);
   } catch (error) {
     console.error("Error updating name:", error);

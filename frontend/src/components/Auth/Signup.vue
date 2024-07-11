@@ -21,15 +21,12 @@ export default {
         };
 
         const handleRegister = async () => {
-            console.log("Register button pressed");
             if (!isValidUsername(username.value)) {
-                console.log('Invalid username');
                 return;
             }
             try {
                 const registrationSuccessful = await authStore.register(name.value, username.value, email.value, password.value);
                 if (registrationSuccessful) {
-                    console.log('Registration and login successful');
                     router.push('/');
                     toast.success('Registration successful');
                 } else {

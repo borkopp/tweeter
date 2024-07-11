@@ -29,14 +29,11 @@ export default {
         const toast = useToast();
 
         const handleLogin = async () => {
-            console.log("Login button pressed");
             await authStore.login(username.value, password.value);
             if (authStore.isAuthorized) {
-                console.log('Login successful');
                 router.push('/');
                 toast.success('Logged in successfully!');
             } else {
-                console.log('Login failed');
                 toast.error('Login failed. Please check your credentials.');
             }
         };
