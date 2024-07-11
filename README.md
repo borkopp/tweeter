@@ -1,7 +1,7 @@
 # Tweeter - Full-Stack Twitter Alternative
 
 ## Overview
-Tweeter is a simple, full-stack Twitter alternative with authentication, developed by Borko Petrevski (IN).
+Tweeter is a simple, full-stack Twitter alternative with authentication, developed by Borko Petrevski.
 
 ## Project Documentation
 For detailed project documentation visit:
@@ -26,6 +26,9 @@ https://miro.com/app/board/uXjVKcXZiZI=/?share_link_id=200809234493
 
 ## Setup and Installation
 
+Generate .env file
+```./create_env.sh```
+
 ### Using Docker
 1. Ensure Docker and Docker Compose are installed on your system.
 2. Clone the repository.
@@ -39,7 +42,6 @@ https://miro.com/app/board/uXjVKcXZiZI=/?share_link_id=200809234493
 2. Set up the backend:
 - Navigate to the `/backend` directory.
 - Install dependencies: `npm install`
-- Set up environment variables in a `.env` file.
 - Start the server: `npm start`
 3. Set up the frontend:
 - Navigate to the `/frontend` directory.
