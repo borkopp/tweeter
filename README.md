@@ -1,7 +1,7 @@
 # Tweeter - Full-Stack Twitter Alternative
 
 ## Overview
-Tweeter is a simple, full-stack Twitter alternative with authentication, developed by Borko Petrevski.
+Tweeter is a simple, full-stack Twitter alternative with authentication, developed for my uni project.
 
 ## Project Documentation
 For detailed project documentation visit:
